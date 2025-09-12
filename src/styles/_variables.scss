@@ -1,0 +1,78 @@
+// Bootstrap-style CSS custom properties for theme system
+:root {
+  // Primary colors
+  --bs-primary: #2f80ed;
+  --bs-secondary: #6c757d;
+  --bs-success: #52c41a;
+  --bs-danger: #dc3545;
+  --bs-warning: #ffc107;
+  --bs-info: #17a2b8;
+  
+  // Border and spacing
+  --bs-border-radius: 8px;
+  --bs-border-radius-xl: 16px;
+  --bs-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  
+  // Font family - PT Sans
+  --bs-body-font-family: 'PT Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+// Light theme variables
+[data-theme="light"] {
+  --bs-body-bg: #ffffff;
+  --bs-theme-bg: #1f2937;
+  --bs-body-color: #1f2937;
+  --bs-card-bg: #ffffff;
+  --bs-border-color: #e5e7eb;
+  --bs-secondary-color: #6b7280;
+  --bs-primary-bg-subtle: rgba(47, 128, 237, 0.1);
+  --bs-primary-border-subtle: #4dabf7;
+  
+  // Auth-specific light theme
+  --auth-bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  --auth-text-muted: #9ca3af;
+  --auth-primary-color: var(--bs-primary);
+  --auth-primary-hover: #1c6dd0;
+  --auth-error-color: var(--bs-danger);
+}
+
+// Dark theme variables (ChatGPT-like black theme)
+[data-theme="dark"] {
+  --bs-body-bg: #212121;
+  --bs-theme-bg: #e6e6e6;
+  --bs-body-color: #ececec;
+  --bs-card-bg: #2f2f2f;
+  --bs-border-color: #444444;
+  --bs-secondary-color: #b3b3b3;
+  --bs-primary-bg-subtle: rgba(47, 128, 237, 0.2);
+  --bs-primary-border-subtle: #4dabf7;
+  
+  // Auth-specific dark theme
+  --auth-bg-gradient: linear-gradient(135deg, #212121 0%, #2f2f2f 100%);
+  --auth-text-muted: #999999;
+  --auth-primary-color: var(--bs-primary);
+  --auth-primary-hover: #4dabf7;
+  --auth-error-color: var(--bs-danger);
+}
+
+// Legacy SCSS variables for backward compatibility
+$primary-color: #2f80ed;
+$success-color: #52c41a;
+
+// Dark theme
+$dark-bg: #212121;
+$dark-card-bg: #2f2f2f;
+$dark-text: #ececec;
+$dark-input-bg: #3a3a3a;
+$dark-border: #444444;
+
+// Light theme  
+$light-bg: #f5f7fa;
+$light-card-bg: #ffffff;
+$light-text: #1f2937;
+$light-input-bg: #ffffff;
+$light-border: #e5e7eb;
+
+$muted-color: #9aa0a6;
+$light-muted-color: #6b7280;
+$border-radius: 8px;
