@@ -209,45 +209,36 @@ export default function Personal() {
           </div>
         </div>
 
-        <div className="integration-content">
-          <div className="content-header">
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: 24,
-              }}
-            >
-              <div>
-                <Title level={2} className="page-title">
-                  <UserOutlined style={{ marginRight: 8 }} />
-                  Personal Information
+        <div className="personal-page-content">
+          {/* Hero Section */}
+          <div className="personal-hero-section">
+            <div className="hero-background"></div>
+            <div className="hero-content">
+              <div className="hero-text">
+                <Title level={1} className="hero-title">
+                  Personal Settings
                 </Title>
-                <Text className="page-subtitle">
-                  Manage your profile, connected accounts, and security settings
+                <Text className="hero-subtitle">
+                  Manage your profile, security, and connected services
                 </Text>
               </div>
-              <div style={{ display: "flex", gap: 12 }}>
+              <div className="hero-actions">
                 {!editMode ? (
                   <Button
                     type="primary"
                     icon={<EditOutlined />}
                     onClick={() => setEditMode(true)}
-                    style={{ height: 40 }}
+                    className="primary-action-btn"
+                    size="large"
                   >
                     Edit Profile
                   </Button>
                 ) : (
-                  <Space>
+                  <Space size="middle">
                     <Button 
                       onClick={handleCancelEdit} 
-                      style={{ 
-                        height: 40,
-                        backgroundColor: 'var(--bs-card-bg)',
-                        borderColor: 'var(--bs-border-color)',
-                        color: 'var(--bs-body-color)'
-                      }}
+                      className="secondary-action-btn"
+                      size="large"
                     >
                       Cancel
                     </Button>
@@ -255,7 +246,8 @@ export default function Personal() {
                       type="primary"
                       icon={<SaveOutlined />}
                       onClick={handleSaveProfile}
-                      style={{ height: 40 }}
+                      className="primary-action-btn"
+                      size="large"
                     >
                       Save Changes
                     </Button>
@@ -265,370 +257,302 @@ export default function Personal() {
             </div>
           </div>
           
-          <div>
-            <Row gutter={[24, 24]}>
+          {/* Main Content Grid */}
+          <div className="personal-content-grid">
+            <Row gutter={[32, 32]}>
               {/* Profile Information */}
               <Col xs={24} lg={16}>
-                <Card className="content-section">
-                  <Title level={4} style={{ margin: "0 0 20px 0" }}>
-                    Profile Information
-                  </Title>
-
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      gap: 20,
-                      marginBottom: 24,
-                    }}
-                  >
-                    <div style={{ textAlign: "center" }}>
-                      <Avatar
-                        size={80}
-                        style={{ backgroundColor: "#2f80ed", marginBottom: 8 }}
-                      >
-                        <Text
-                          style={{
-                            color: "white",
-                            fontWeight: "bold",
-                            fontSize: "24px",
-                          }}
-                        >
-                          KV
-                        </Text>
-                      </Avatar>
-                      {editMode && (
-                        <Upload
-                          accept="image/*"
-                          showUploadList={false}
-                          beforeUpload={handleUploadAvatar}
-                        >
-                          <Button icon={<CameraOutlined />} size="small">
-                            Change Photo
-                          </Button>
-                        </Upload>
-                      )}
-                    </div>
-
-                    <div style={{ flex: 1 }}>
-                      <Form
-                        form={form}
-                        layout="vertical"
-                        initialValues={userProfile}
-                      >
-                        <Row gutter={16}>
-                          <Col span={12}>
-                            <Form.Item name="name" label="Full Name">
-                              {editMode ? (
-                                <Input />
-                              ) : (
-                                <Text strong style={{ fontSize: 16 }}>
-                                  {userProfile.name}
-                                </Text>
-                              )}
-                            </Form.Item>
-                          </Col>
-                          <Col span={12}>
-                            <Form.Item name="email" label="Email">
-                              {editMode ? (
-                                <Input />
-                              ) : (
-                                <Text>{userProfile.email}</Text>
-                              )}
-                            </Form.Item>
-                          </Col>
-                        </Row>
-
-                        <Row gutter={16}>
-                          <Col span={12}>
-                            <Form.Item name="phone" label="Phone">
-                              {editMode ? (
-                                <Input />
-                              ) : (
-                                <Text>{userProfile.phone}</Text>
-                              )}
-                            </Form.Item>
-                          </Col>
-                          <Col span={12}>
-                            <Form.Item name="timezone" label="Timezone">
-                              {editMode ? (
-                                <Input />
-                              ) : (
-                                <Text>{userProfile.timezone}</Text>
-                              )}
-                            </Form.Item>
-                          </Col>
-                        </Row>
-
-                        <Form.Item name="bio" label="Bio">
-                          {editMode ? (
-                            <TextArea rows={3} />
-                          ) : (
-                            <Text>{userProfile.bio}</Text>
+                <div className="profile-main-section">
+                  {/* Profile Header Card */}
+                  <Card className="profile-header-card">
+                    <div className="profile-header-content">
+                      <div className="profile-avatar-section">
+                        <div className="avatar-container">
+                          <Avatar
+                            size={120}
+                            className="profile-avatar"
+                          >
+                            <Text className="avatar-text">KV</Text>
+                          </Avatar>
+                          {editMode && (
+                            <Upload
+                              accept="image/*"
+                              showUploadList={false}
+                              beforeUpload={handleUploadAvatar}
+                              className="avatar-upload"
+                            >
+                              <Button 
+                                icon={<CameraOutlined />} 
+                                className="avatar-change-btn"
+                                shape="circle"
+                                size="large"
+                              />
+                            </Upload>
                           )}
-                        </Form.Item>
-                      </Form>
+                        </div>
+                        <div className="profile-status">
+                          <Tag className="status-tag" icon={<CheckCircleOutlined />}>
+                            Active Account
+                          </Tag>
+                        </div>
+                      </div>
+
+                      <div className="profile-basic-info">
+                        <div className="profile-name-section">
+                          <Title level={3} className="profile-name">
+                            {userProfile.name}
+                          </Title>
+                          <Text className="profile-email">
+                            {userProfile.email}
+                          </Text>
+                        </div>
+                        <div className="profile-stats">
+                          <div className="stat-item">
+                            <Text className="stat-value">2</Text>
+                            <Text className="stat-label">Connected Accounts</Text>
+                          </div>
+                          <div className="stat-divider"></div>
+                          <div className="stat-item">
+                            <Text className="stat-value">156</Text>
+                            <Text className="stat-label">Calendar Events</Text>
+                          </div>
+                          <div className="stat-divider"></div>
+                          <div className="stat-item">
+                            <Text className="stat-value">Member since</Text>
+                            <Text className="stat-label">{userProfile.joinDate}</Text>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  </Card>
 
-                  <Divider />
-
-                  <div>
-                    <Title level={5}>Account Information</Title>
-                    <Space direction="vertical" style={{ width: "100%" }}>
-                      <div
-                        style={{ display: "flex", justifyContent: "space-between" }}
-                      >
-                        <Text strong>Member since:</Text>
-                        <Text>{userProfile.joinDate}</Text>
-                      </div>
-                      <div
-                        style={{ display: "flex", justifyContent: "space-between" }}
-                      >
-                        <Text strong>Language:</Text>
-                        <Text>{userProfile.language}</Text>
-                      </div>
-                      <div
-                        style={{ display: "flex", justifyContent: "space-between" }}
-                      >
-                        <Text strong>Account Status:</Text>
-                        <Tag color="success" icon={<CheckCircleOutlined />}>
-                          Active
-                        </Tag>
-                      </div>
-                    </Space>
-                  </div>
-                </Card>
+                  {/* Profile Details Card */}
+                  <Card className="profile-details-card" title="Profile Information">
+                    <Form
+                      form={form}
+                      layout="vertical"
+                      initialValues={userProfile}
+                      className="profile-form"
+                    >
+                      <Row gutter={[24, 4]}>
+                        <Col span={12}>
+                          <Form.Item name="name" label="Full Name" className="form-item-modern">
+                            {editMode ? (
+                              <Input className="modern-input" placeholder="Enter your full name" />
+                            ) : (
+                              <div className="readonly-value">
+                                <Text strong>{userProfile.name}</Text>
+                              </div>
+                            )}
+                          </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                          <Form.Item name="email" label="Email Address" className="form-item-modern">
+                            {editMode ? (
+                              <Input className="modern-input" placeholder="Enter your email" />
+                            ) : (
+                              <div className="readonly-value">
+                                <Text>{userProfile.email}</Text>
+                              </div>
+                            )}
+                          </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                          <Form.Item name="phone" label="Phone Number" className="form-item-modern">
+                            {editMode ? (
+                              <Input className="modern-input" placeholder="Enter your phone number" />
+                            ) : (
+                              <div className="readonly-value">
+                                <Text>{userProfile.phone}</Text>
+                              </div>
+                            )}
+                          </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                          <Form.Item name="timezone" label="Timezone" className="form-item-modern">
+                            {editMode ? (
+                              <Input className="modern-input" placeholder="Select your timezone" />
+                            ) : (
+                              <div className="readonly-value">
+                                <Text>{userProfile.timezone}</Text>
+                              </div>
+                            )}
+                          </Form.Item>
+                        </Col>
+                        <Col span={24}>
+                          <Form.Item name="bio" label="Bio" className="form-item-modern">
+                            {editMode ? (
+                              <TextArea 
+                                rows={3} 
+                                className="modern-textarea" 
+                                placeholder="Tell us about yourself..."
+                              />
+                            ) : (
+                              <div className="readonly-value">
+                                <Text>{userProfile.bio}</Text>
+                              </div>
+                            )}
+                          </Form.Item>
+                        </Col>
+                      </Row>
+                    </Form>
+                  </Card>
+                </div>
               </Col>
 
-              {/* Security Settings */}
+              {/* Security & Preferences Sidebar */}
               <Col xs={24} lg={8}>
-                <Card className="content-section">
-                  <Title level={4}>Security Settings</Title>
-                  <Space
-                    direction="vertical"
-                    style={{ width: "100%" }}
-                    size="large"
-                  >
-                    <div>
-                      <Text strong>Password</Text>
-                      <br />
-                      <Text type="secondary" style={{ fontSize: "12px" }}>
-                        Last changed 30 days ago
-                      </Text>
-                      <br />
-                      <Button
-                        icon={<LockOutlined />}
-                        onClick={() => setPasswordModalVisible(true)}
-                        style={{ 
-                          marginTop: 8,
-                          backgroundColor: 'var(--auth-primary-color)',
-                          borderColor: 'var(--auth-primary-color)',
-                          color: 'white'
-                        }}
-                        className="dark-theme-button"
-                      >
-                        Change Password
-                      </Button>
+                <div className="sidebar-sections">
+                  {/* Security Settings */}
+                  <Card className="security-card" title="Security">
+                    <div className="security-items">
+                      <div className="security-item">
+                        <div className="security-item-header">
+                          <div className="security-icon">
+                            <LockOutlined />
+                          </div>
+                          <div className="security-info">
+                            <Text strong className="security-title">Password</Text>
+                            <Text className="security-description">
+                              Last changed 30 days ago
+                            </Text>
+                          </div>
+                        </div>
+                        <Button
+                          icon={<EditOutlined />}
+                          onClick={() => setPasswordModalVisible(true)}
+                          className="security-action-btn"
+                        >
+                          Change
+                        </Button>
+                      </div>
+
+                      <div className="security-item">
+                        <div className="security-item-header">
+                          <div className="security-icon">
+                            <SettingOutlined />
+                          </div>
+                          <div className="security-info">
+                            <Text strong className="security-title">Active Sessions</Text>
+                            <Text className="security-description">
+                              2 active devices
+                            </Text>
+                          </div>
+                        </div>
+                        <Button className="security-action-btn">
+                          Manage
+                        </Button>
+                      </div>
                     </div>
+                  </Card>
 
-                    <Divider style={{ margin: "12px 0" }} />
-
-                    <div>
-                      <Text strong>Two-Factor Authentication</Text>
-                      <br />
-                      <Text type="secondary" style={{ fontSize: "12px" }}>
-                        Not enabled
-                      </Text>
-                      <br />
-                      <Button 
-                        style={{ 
-                          marginTop: 8,
-                          backgroundColor: 'var(--auth-primary-color)',
-                          borderColor: 'var(--auth-primary-color)',
-                          color: 'white'
-                        }}
-                        className="dark-theme-button"
-                      >
-                        Enable 2FA
-                      </Button>
+                  {/* Quick Stats */}
+                  <Card className="stats-card" title="Account Overview">
+                    <div className="stats-grid">
+                      <div className="stat-card">
+                        <div className="stat-number">2</div>
+                        <div className="stat-label">Connected Services</div>
+                      </div>
+                      <div className="stat-card">
+                        <div className="stat-number">156</div>
+                        <div className="stat-label">Calendar Events</div>
+                      </div>
+                      <div className="stat-card">
+                        <div className="stat-number">30</div>
+                        <div className="stat-label">Days Active</div>
+                      </div>
+                      <div className="stat-card">
+                        <div className="stat-number">98%</div>
+                        <div className="stat-label">Sync Success</div>
+                      </div>
                     </div>
-
-                    <Divider style={{ margin: "12px 0" }} />
-
-                    <div>
-                      <Text strong>Login Sessions</Text>
-                      <br />
-                      <Text type="secondary" style={{ fontSize: "12px" }}>
-                        2 active sessions
-                      </Text>
-                      <br />
-                      <Button 
-                        style={{ 
-                          marginTop: 8,
-                          backgroundColor: 'var(--auth-primary-color)',
-                          borderColor: 'var(--auth-primary-color)',
-                          color: 'white'
-                        }}
-                        className="dark-theme-button"
-                      >
-                        Manage Sessions
-                      </Button>
-                    </div>
-                  </Space>
-                </Card>
+                  </Card>
+                </div>
               </Col>
             </Row>
 
-            {/* Connected Accounts */}
-            <Card className="content-section" style={{ marginTop: 24 }}>
-              <Title level={4}>Connected Accounts</Title>
-              <Text type="secondary" style={{ marginBottom: 16, display: "block" }}>
-                Manage your connected Google accounts and services
-              </Text>
+            {/* Connected Accounts Section */}
+            <Card className="connected-accounts-section" title="Connected Services">
+              <div className="accounts-header">
+                <Text className="section-description">
+                  Manage your connected Google services and permissions
+                </Text>
+                <Button 
+                  type="primary" 
+                  icon={<PlusOutlined />} 
+                  className="add-account-btn"
+                >
+                  Connect New Service
+                </Button>
+              </div>
 
-              <Row gutter={[16, 16]}>
+              <div className="accounts-grid">
                 {connectedAccounts.map((account) => (
-                  <Col xs={24} md={12} key={account.id}>
-                    <Card
-                      size="small"
-                      style={{ border: "1px solid var(--bs-border-color)" }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 12,
-                          marginBottom: 12,
-                        }}
-                      >
-                        <Avatar icon={account.avatar} size="large" />
-                        <div style={{ flex: 1 }}>
-                          <Title level={5} style={{ margin: 0 }}>
-                            {account.name}
-                          </Title>
-                          <Text type="secondary" style={{ fontSize: "12px" }}>
-                            {account.email}
-                          </Text>
-                        </div>
-                        <Tag 
-                          icon={<CheckCircleOutlined />}
-                          style={{
-                            backgroundColor: 'var(--bs-success)',
-                            borderColor: 'var(--bs-success)',
-                            color: 'white'
-                          }}
-                        >
+                  <div key={account.id} className="account-card">
+                    <div className="account-header">
+                      <div className="account-avatar">
+                        <Avatar icon={account.avatar} size={48} className="service-avatar" />
+                      </div>
+                      <div className="account-info">
+                        <Title level={5} className="account-name">{account.name}</Title>
+                        <Text className="account-email">{account.email}</Text>
+                      </div>
+                      <div className="account-status">
+                        <Tag className="connected-tag" icon={<CheckCircleOutlined />}>
                           Connected
                         </Tag>
                       </div>
+                    </div>
 
-                      <Space
-                        direction="vertical"
-                        style={{ width: "100%" }}
-                        size="small"
+                    <div className="account-details">
+                      <div className="detail-row">
+                        <Text className="detail-label">Connected:</Text>
+                        <Text className="detail-value">{account.connectedDate}</Text>
+                      </div>
+                       
+                        <div className="detail-row">
+                          <Text className="detail-label">Last Sync:</Text>
+                          <Text className="detail-value">{account.lastSync}</Text>
+                        </div>
+                      
+                        <div className="detail-row">
+                          <Text className="detail-label">Events:</Text>
+                          <Text className="detail-value">{account.events}</Text>
+                        </div>
+                      
+                    </div>
+
+                    <div className="account-permissions">
+                      <Text className="permissions-label">Permissions:</Text>
+                      <div className="permissions-tags">
+                        {account.permissions.map((permission, index) => (
+                          <Tag key={index} className="permission-tag">
+                            {permission}
+                          </Tag>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="account-actions">
+                      <Button 
+                        icon={<SettingOutlined />}
+                        className="configure-btn"
                       >
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <Text strong style={{ fontSize: "12px" }}>
-                            Connected:
-                          </Text>
-                          <Text style={{ fontSize: "12px" }}>
-                            {account.connectedDate}
-                          </Text>
-                        </div>
-
-                        
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            <Text strong style={{ fontSize: "12px" }}>
-                              Last Sync:
-                            </Text>
-                            <Text style={{ fontSize: "12px" }}>
-                              {account.lastSync}|| NA
-                            </Text>
-                          </div>
-                        
-
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            <Text strong style={{ fontSize: "12px" }}>
-                              Events:
-                            </Text>
-                            <Text style={{ fontSize: "12px" }}>
-                              {account.events} || 0
-                            </Text>
-                          </div>
-
-                        <div>
-                          <Text strong style={{ fontSize: "12px" }}>
-                            Permissions:
-                          </Text>
-                          <div style={{ marginTop: 4 }}>
-                            {account.permissions.map((permission, index) => (
-                              <Tag
-                                key={index}
-                                size="small"
-                                style={{ 
-                                  margin: "1px 2px",
-                                  backgroundColor: 'var(--bs-primary-bg-subtle)',
-                                  borderColor: 'var(--auth-primary-color)',
-                                  color: 'var(--auth-primary-color)',
-                                  border: '1px solid var(--auth-primary-color)'
-                                }}
-                              >
-                                {permission}
-                              </Tag>
-                            ))}
-                          </div>
-                        </div>
-
-                        <div style={{ marginTop: 12, textAlign: "right" }}>
-                          <Space>
-                            <Button 
-                              size="small" 
-                              icon={<SettingOutlined />}
-                              style={{
-                                backgroundColor: 'var(--auth-primary-color)',
-                                borderColor: 'var(--auth-primary-color)',
-                                color: 'white'
-                              }}
-                              className="dark-theme-button"
-                            >
-                              Configure
-                            </Button>
-                            <Button
-                              size="small"
-                              danger
-                              onClick={() => handleDisconnectAccount(account.id)}
-                              style={{
-                                backgroundColor: 'var(--bs-danger)',
-                                borderColor: 'var(--bs-danger)',
-                                color: 'white'
-                              }}
-                            >
-                              Disconnect
-                            </Button>
-                          </Space>
-                        </div>
-                      </Space>
-                    </Card>
-                  </Col>
+                        Configure
+                      </Button>
+                      <Button
+                        danger
+                        onClick={() => handleDisconnectAccount(account.id)}
+                        className="disconnect-btn"
+                      >
+                        Disconnect
+                      </Button>
+                    </div>
+                  </div>
                 ))}
-              </Row>
+              </div>
             </Card>
+          </div>
 
             {/* Change Password Modal */}
             <Modal
@@ -692,6 +616,5 @@ export default function Personal() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
