@@ -113,7 +113,6 @@ export default function Integrations() {
   const conversationHistory = ConversationService.getConversationHistory(currentChatId);
 
   const handleConversationClick = (chatId) => {
-    // Navigate to Dashboard with the selected chat
     navigate('/home', { state: { selectedChatId: chatId } });
   };
 

@@ -810,6 +810,48 @@ input[type="password"],
   }
 }
 
+// Dark theme button styling for Personal page
+.dark-theme-button {
+  &:hover {
+    background: var(--auth-primary-hover) !important;
+    border-color: var(--auth-primary-hover) !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(47, 128, 237, 0.4) !important;
+  }
+
+  &:focus {
+    background: var(--auth-primary-color) !important;
+    border-color: var(--auth-primary-color) !important;
+    color: white !important;
+    box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.2) !important;
+  }
+
+  &:active {
+    background: var(--auth-primary-hover) !important;
+    border-color: var(--auth-primary-hover) !important;
+    transform: translateY(0) !important;
+  }
+}
+
+// Dark theme danger button styling
+.ant-btn[danger] {
+  &:hover {
+    background: #dc3545 !important;
+    border-color: #dc3545 !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4) !important;
+  }
+
+  &:focus {
+    background: var(--bs-danger) !important;
+    border-color: var(--bs-danger) !important;
+    color: white !important;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2) !important;
+  }
+}
+
 // Professional checkbox styling
 .ant-checkbox {
   .ant-checkbox-inner {
@@ -888,10 +930,10 @@ input[type="password"],
   margin-bottom: 0 !important;
 }
 
-.ant-col {
-  padding-left: 6px;
-  padding-right: 6px;
-}
+// .ant-col {
+//   padding-left: 6px;
+//   padding-right: 6px;
+// }
 
 // Form validation and error styling
 .ant-form-item-explain-error {
@@ -2504,7 +2546,7 @@ input[type="password"],
     border: 1px solid var(--bs-border-color);
     border-radius: 12px;
     padding: 0;
-    margin-bottom: 24px;
+    // margin-bottom: 24px;
 
     .section-title {
       color: var(--bs-body-color) !important;
