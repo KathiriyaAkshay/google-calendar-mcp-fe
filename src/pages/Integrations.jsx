@@ -37,35 +37,13 @@ export default function Integrations() {
   const navigate = useNavigate();
   const appConfig = ConversationService.getAppConfig();
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeTab, setActiveTab] = useState("all");
   const [currentChatId, setCurrentChatId] = useState(appConfig.defaultChatId);
   const [chats, setChats] = useState(ConversationService.getAllConversations());
 
   const userInfo = ConversationService.getUserInfo();
+  
   // Google Calendar related integrations data
   const integrations = [
-    {
-      id: "salesforce",
-      name: "Salesforce",
-      description: "CRM & Pipeline data",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/salesforce/salesforce-original.svg",
-      status: "connected",
-      category: "crm",
-      permissions: ["Read contacts", "Create opportunities", "Update pipeline"],
-      connectedDate: "2025-09-10",
-      lastSync: "2 minutes ago",
-      contacts: 1250,
-    },
-    {
-      id: "apollo",
-      name: "Apollo.io",
-      description: "Prospecting & Lead data",
-      icon: "https://assets-global.website-files.com/61c441abf0ae3e2d6b8e0ae3/61c56c509622c46d9e500f34_Apollo%20Logo%20Dark.png",
-      status: "available",
-      category: "sales",
-      permissions: ["Read leads", "Export contacts", "Access analytics"],
-      features: ["Lead scoring", "Email sequences", "Contact enrichment"],
-    },
     {
       id: "google-calendar",
       name: "Google Calendar",
@@ -77,37 +55,7 @@ export default function Integrations() {
       connectedDate: "2025-09-10",
       lastSync: "2 minutes ago",
       events: 156,
-    },
-    {
-      id: "hubspot",
-      name: "HubSpot",
-      description: "CRM & Marketing data",
-      icon: "https://www.hubspot.com/hubfs/HubSpot_Logos/HubSpot-Inversed-Favicon.png",
-      status: "available",
-      category: "marketing",
-      permissions: ["Read contacts", "Access deals", "Marketing analytics"],
-      features: ["Contact sync", "Deal tracking", "Marketing automation"],
-    },
-    {
-      id: "gmail",
-      name: "Gmail",
-      description: "Email communication data",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg",
-      status: "available",
-      category: "communication",
-      permissions: ["Read emails", "Send emails", "Access attachments"],
-      features: ["Email sync", "Auto-reply", "Template management"],
-    },
-    {
-      id: "google-drive",
-      name: "Google Drive",
-      description: "Business integration",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg",
-      status: "available",
-      category: "storage",
-      permissions: ["Read files", "Upload files", "Share documents"],
-      features: ["File sync", "Document collaboration", "Version control"],
-    },
+    }
   ];
 
   const conversationHistory = ConversationService.getConversationHistory(currentChatId);
@@ -116,23 +64,9 @@ export default function Integrations() {
     navigate('/home', { state: { selectedChatId: chatId } });
   };
 
-  const filteredIntegrations = integrations.filter((integration) => {
-    const matchesSearch =
-      integration.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      integration.description.toLowerCase().includes(searchQuery.toLowerCase());
-
-    if (activeTab === "all") return matchesSearch;
-    if (activeTab === "connected")
-      return matchesSearch && integration.status === "connected";
-    if (activeTab === "available")
-      return matchesSearch && integration.status === "available";
-
-    return matchesSearch;
-  });
-
   const handleNewConversation = () => {
     const { newChatId, updatedChats } = ConversationService.createNewConversation(chats);
-    
+
     setChats(updatedChats);
     setCurrentChatId(newChatId);
     message.success("New conversation started!");
@@ -146,8 +80,7 @@ export default function Integrations() {
 
   const handleDisconnect = (integrationId) => {
     message.warning(
-      `Disconnected from ${
-        integrations.find((i) => i.id === integrationId)?.name
+      `Disconnected from ${integrations.find((i) => i.id === integrationId)?.name
       }`
     );
   };
@@ -311,7 +244,7 @@ export default function Integrations() {
     {
       icon: <SettingOutlined />,
       tooltip: "Settings",
-      onClick: () => {},
+      onClick: () => { },
     },
   ];
 
@@ -352,52 +285,21 @@ export default function Integrations() {
               }}
             >
               <div>
-                <Title level={2} className="page-title">
+                <div className="page-title">
                   Integrations
-                </Title>
-                <Text className="page-subtitle">
-                  Connect and manage your Google Calendar and related services
-                </Text>
+                </div>
+                <div className="page-subtitle">
+                  Seamlessly connect and manage your Google Calendar along with other essential services to streamline scheduling and productivity.
+                </div>
               </div>
-              <Input
-                placeholder="Search integrations..."
-                prefix={
-                  <SearchOutlined
-                    style={{ color: "var(--bs-secondary-color)" }}
-                  />
-                }
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                allowClear
-                style={{
-                  width: 280,
-                  height: 40,
-                  borderRadius: 6,
-                  border: "1px solid var(--bs-border-color)",
-                  backgroundColor: "var(--bs-body-bg)",
-                  fontSize: "14px",
-                  fontFamily: "PT Sans, var(--bs-body-font-family)",
-                }}
-                className="integration-search-input"
-              />
             </div>
-          </div>
-
-          {/* Tabs for filtering */}
-          <div style={{ marginBottom: 24 }}>
-            <Tabs
-              activeKey={activeTab}
-              onChange={setActiveTab}
-              items={tabItems}
-              size="large"
-            />
           </div>
 
           {/* Integration Table */}
           <Card className="content-section">
             <Table
               columns={columns}
-              dataSource={filteredIntegrations}
+              dataSource={integrations}
               rowKey="id"
               pagination={false}
               showHeader={true}
@@ -405,24 +307,12 @@ export default function Integrations() {
               style={{
                 backgroundColor: "transparent",
               }}
+              className="integration-table"
               rowClassName={(record, index) =>
                 index % 2 === 0 ? "table-row-even" : "table-row-odd"
               }
             />
           </Card>
-
-          {filteredIntegrations.length === 0 && (
-            <div className="content-empty">
-              <div className="empty-icon">
-                <SearchOutlined />
-              </div>
-              <div className="empty-title">No integrations found</div>
-              <div className="empty-description">
-                Try adjusting your search terms or browse all available
-                integrations
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>
