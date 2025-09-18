@@ -62,18 +62,18 @@
   .hero-title {
     color: var(--bs-body-color) !important;
     margin: 0 0 8px 0 !important;
-    font-size: 36px !important;
+    font-size: var(--font-size-display-md) !important;
     font-weight: 700 !important;
     letter-spacing: -0.5px;
     
     @media (max-width: 768px) {
-      font-size: 28px !important;
+      font-size: var(--font-size-xxxl) !important;
     }
   }
   
   .hero-subtitle {
     color: var(--bs-secondary-color) !important;
-    font-size: 16px;
+    font-size: var(--font-size-base);
     margin: 0;
     opacity: 0.95;
   }
@@ -182,7 +182,7 @@
     
     .avatar-text {
       color: white !important;
-      font-size: 36px !important;
+      font-size: var(--font-size-display-md) !important;
       font-weight: 700 !important;
     }
   }
@@ -228,13 +228,13 @@
   .profile-name {
     margin: 0 0 4px 0 !important;
     color: var(--bs-body-color) !important;
-    font-size: 28px !important;
+    font-size: var(--font-size-xxxl) !important;
     font-weight: 700 !important;
   }
   
   .profile-email {
     color: var(--bs-secondary-color) !important;
-    font-size: 16px !important;
+    font-size: var(--font-size-base) !important;
   }
 }
 
@@ -255,14 +255,14 @@
   
   .stat-value {
     color: var(--bs-body-color) !important;
-    font-size: 18px !important;
+    font-size: var(--font-size-lg) !important;
     font-weight: 700 !important;
     margin: 0 !important;
   }
   
   .stat-label {
     color: var(--bs-secondary-color) !important;
-    font-size: 12px !important;
+    font-size: var(--font-size-sm) !important;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin: 0 !important;
@@ -297,7 +297,7 @@
     
     .ant-card-head-title {
       color: var(--bs-body-color) !important;
-      font-size: 20px !important;
+      font-size: var(--font-size-xl) !important;
       font-weight: 600 !important;
     }
   }
@@ -318,7 +318,7 @@
       label {
         color: var(--bs-body-color) !important;
         font-weight: 600 !important;
-        font-size: 14px !important;
+        font-size: var(--font-size-md) !important;
       }
     }
   }
@@ -330,7 +330,7 @@
     border-radius: 10px !important;
     padding: 12px 16px !important;
     color: var(--bs-body-color) !important;
-    font-size: 14px !important;
+    font-size: var(--font-size-md) !important;
     transition: all 0.3s ease !important;
     
     &:hover {
@@ -393,7 +393,7 @@
     
     .ant-card-head-title {
       color: var(--bs-body-color) !important;
-      font-size: 18px !important;
+      font-size: var(--font-size-lg) !important;
       font-weight: 600 !important;
     }
   }
@@ -442,7 +442,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: var(--font-size-base);
   
   &.warning {
     background: rgba(250, 173, 20, 0.1);
@@ -453,7 +453,7 @@
 .security-info {
   .security-title {
     color: var(--bs-body-color) !important;
-    font-size: 14px !important;
+    font-size: var(--font-size-md) !important;
     font-weight: 600 !important;
     margin: 0 0 2px 0 !important;
     display: block;
@@ -461,7 +461,7 @@
   
   .security-description {
     color: var(--bs-secondary-color) !important;
-    font-size: 12px !important;
+    font-size: var(--font-size-sm) !important;
     margin: 0 !important;
     
     &.warning {
@@ -477,7 +477,7 @@
   border-radius: 8px !important;
   padding: 6px 16px !important;
   height: auto !important;
-  font-size: 12px !important;
+  font-size: var(--font-size-sm) !important;
   font-weight: 500 !important;
   transition: all 0.3s ease !important;
   
@@ -518,7 +518,7 @@
     
     .ant-card-head-title {
       color: var(--bs-body-color) !important;
-      font-size: 18px !important;
+      font-size: var(--font-size-lg) !important;
       font-weight: 600 !important;
     }
   }
@@ -550,14 +550,14 @@
   }
   
   .stat-number {
-    font-size: 24px;
+    font-size: var(--font-size-xxl);
     font-weight: 700;
     color: var(--auth-primary-color);
     margin-bottom: 4px;
   }
   
   .stat-label {
-    font-size: 11px;
+    font-size: var(--font-size-xs);
     color: var(--bs-secondary-color);
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -584,7 +584,7 @@
     
     .ant-card-head-title {
       color: var(--bs-body-color) !important;
-      font-size: 20px !important;
+      font-size: var(--font-size-xl) !important;
       font-weight: 600 !important;
     }
   }
@@ -608,7 +608,7 @@
   
   .section-description {
     color: var(--bs-secondary-color) !important;
-    font-size: 14px !important;
+    font-size: var(--font-size-md) !important;
     margin: 0 !important;
   }
   
@@ -670,14 +670,14 @@
     
     .account-name {
       color: var(--bs-body-color) !important;
-      font-size: 16px !important;
+      font-size: var(--font-size-base) !important;
       font-weight: 600 !important;
       margin: 0 0 2px 0 !important;
     }
     
     .account-email {
       color: var(--bs-secondary-color) !important;
-      font-size: 12px !important;
+      font-size: var(--font-size-sm) !important;
       margin: 0 !important;
     }
   }
@@ -689,7 +689,7 @@
     border-radius: 20px !important;
     padding: 4px 12px !important;
     font-weight: 500 !important;
-    font-size: 11px !important;
+    font-size: var(--font-size-xs) !important;
   }
 }
 
@@ -706,14 +706,14 @@
     
     .detail-label {
       color: var(--bs-secondary-color) !important;
-      font-size: 12px !important;
+      font-size: var(--font-size-sm) !important;
       font-weight: 500 !important;
       margin: 0 !important;
     }
     
     .detail-value {
       color: var(--bs-body-color) !important;
-      font-size: 12px !important;
+      font-size: var(--font-size-sm) !important;
       margin: 0 !important;
     }
   }
@@ -724,7 +724,7 @@
   
   .permissions-label {
     color: var(--bs-body-color) !important;
-    font-size: 12px !important;
+    font-size: var(--font-size-sm) !important;
     font-weight: 600 !important;
     margin: 0 0 8px 0 !important;
     display: block;
@@ -741,7 +741,7 @@
       color: var(--auth-primary-color) !important;
       border-radius: 16px !important;
       padding: 2px 8px !important;
-      font-size: 10px !important;
+      font-size: var(--font-size-xxs) !important;
       font-weight: 500 !important;
       margin: 0 !important;
     }
@@ -760,7 +760,7 @@
     border-radius: 8px !important;
     height: 36px !important;
     font-weight: 500 !important;
-    font-size: 12px !important;
+    font-size: var(--font-size-sm) !important;
     transition: all 0.3s ease !important;
     
     &:hover {
@@ -778,7 +778,7 @@
     height: 36px !important;
     padding: 0 16px !important;
     font-weight: 500 !important;
-    font-size: 12px !important;
+    font-size: var(--font-size-sm) !important;
     transition: all 0.3s ease !important;
     
     &:hover {

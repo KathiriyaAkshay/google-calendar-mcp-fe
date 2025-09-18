@@ -1,78 +1,255 @@
-// Bootstrap-style CSS custom properties for theme system
+// Theme variables for the application
+
+// Auth colors
 :root {
-  // Primary colors
-  --bs-primary: #2f80ed;
-  --bs-secondary: #6c757d;
-  --bs-success: #52c41a;
-  --bs-danger: #dc3545;
-  --bs-warning: #ffc107;
-  --bs-info: #17a2b8;
+
+  // Fixed color
+  --fixed-white-color: #ffffff;
+  --fixed-black-color: #000000;
+
+  // Colors 
+  --white-color: #ffffff;
+  --black-color: #000000;
+
+  // Color schema 
+  --primary-color-lightest: #eaf3fe;
+  --primary-color-lighter:  #c7dcfb;
+  --primary-color-light:    #5a9ef1;
+  --primary-color:          #2f80ed;
+  --primary-color-dark:     #2565c4;
+  --primary-color-darker:   #1b4a92;
+  --primary-color-darkest:  #122f61;
+
+
+  // Secondary color schema
+  --secondary-color-lightest: #e9ecef;
+  --secondary-color-lighter:  #d6d8db;
+  --secondary-color-light:    #c4c8cc;
+  --secondary-color:          #adb5bd;
+  --secondary-color-dark:     #868e96;
+  --secondary-color-darker:   #495057;
+  --secondary-color-darkest:  #212529;
+
+  // Colors
+  --auth-primary-color: #2f80ed;
+  --auth-primary-hover: #1c68d3;
+  --auth-error-color: #dc3545;
+  --auth-success-color: #28a745;
+  --auth-warning-color: #ffc107;
+  --auth-text-muted: #6c757d;
+  --auth-muted-color: #6c757d;
   
-  // Border and spacing
-  --bs-border-radius: 8px;
-  --bs-border-radius-xl: 16px;
-  --bs-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  // Light theme specific variables
+  --auth-bg-gradient: linear-gradient(135deg, #eaf3fd 0%, #cfe3fb 100%);
+  --bs-body-bg: #FFFFFF;
   
-  // Font family - PT Sans
-  --bs-body-font-family: 'PT Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  // Font sizes
+  --font-size-base: 16px;
+  --font-size-xs: 11px;
+  --font-size-xxs: 10px;
+  --font-size-sm: 12px;
+  --font-size-md: 14px;
+  --font-size-md-plus: 15px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-xxl: 24px;
+  --font-size-xxxl: 28px;
+  --font-size-display: 32px;
+  --font-size-display-md: 36px;
+  --font-size-display-lg: 38px;
+  --font-size-display-xl: 48px;
+  
+  // Heading sizes
+  --heading-1: var(--font-size-display);
+  --heading-2: var(--font-size-xxxl);
+  --heading-3: var(--font-size-xxl);
+  --heading-4: var(--font-size-xl);
+  --heading-5: var(--font-size-lg);
+  
+  // Line heights
+  --line-height-tight: 1.2;
+  --line-height-base: 1.5;
+  --line-height-relaxed: 1.6;
+  
+  // Font weights
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  // Font family
+  --font-family-base: "PT Sans", var(--bs-body-font-family);
+  
+  // Input sizes
+  --input-height-base: 50px;
+  --input-height-sm: 40px;
+  --input-height-lg: 56px;
+  
+  // Button sizes
+  --button-height-sm: 32px;
+  --button-height-base: 42px;
+  --button-height-lg: 50px;
+  
+  // Border radius
+  --border-radius-sm: 6px;
+  --border-radius-base: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --border-radius-circle: 50%;
+
+  // Border color
+  --bs-border-color-lightest: #f1f3f5;
+  --bs-border-color-lighter: #e9ecef;
+  --bs-border-color-light:   #dee2e6;
+  --bs-border-color:         #ced4da;
+  --bs-border-color-dark:    #adb5bd;
+  --bs-border-color-darker:  #6c757d;
+  --bs-border-color-darkest: #343a40;
+
+  // Input field related color 
+  --gray-color-light : #f9f9f9 ;
+  --gray-color-very-light: #f0f0f0 ; 
+  --grya-color-medium-light: #e0e0e0 ; 
+
+  // Button style related css 
+  --button-height: 45px;
+
+  // Google signin button related css 
+  --google-signin-button-hover-background: #fcfcfc;
+  
+  // Scrollbar styles
+  --scrollbar-track-bg: rgba(0, 0, 0, 0.05);
+  --scrollbar-thumb-bg: rgba(0, 0, 0, 0.2);
+  --scrollbar-thumb-hover-bg: rgba(0, 0, 0, 0.3);
+  
 }
 
-// Light theme variables
-[data-theme="light"] {
-  --bs-body-bg: #ffffff;
-  --bs-theme-bg: #1f2937;
-  --bs-body-color: #1f2937;
-  --bs-card-bg: #ffffff;
-  --bs-border-color: #e5e7eb;
-  --bs-secondary-color: #6b7280;
-  --bs-primary-bg-subtle: rgba(47, 128, 237, 0.1);
-  --bs-primary-border-subtle: #4dabf7;
-  
-  // Auth-specific light theme
-  --auth-bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  --auth-text-muted: #9ca3af;
-  --auth-primary-color: var(--bs-primary);
-  --auth-primary-hover: #1c6dd0;
-  --auth-error-color: var(--bs-danger);
-}
-
-// Dark theme variables (ChatGPT-like black theme)
+// Dark theme specific variables
 [data-theme="dark"] {
-  --bs-body-bg: #212121;
-  --bs-theme-bg: #e6e6e6;
-  --bs-body-color: #ececec;
-  --bs-card-bg: #2f2f2f;
-  --bs-border-color: #444444;
-  --bs-secondary-color: #b3b3b3;
-  --bs-primary-bg-subtle: rgba(47, 128, 237, 0.2);
-  --bs-primary-border-subtle: #4dabf7;
+
+  // Authentication related color
+  --input-field-div-bg: #181a1d ; 
+
+  // Fixed color
+  --fixed-white-color: #ffffff;
+  --fixed-black-color: #000000;
   
-  // Auth-specific dark theme
-  --auth-bg-gradient: linear-gradient(135deg, #212121 0%, #2f2f2f 100%);
-  --auth-text-muted: #999999;
-  --auth-primary-color: var(--bs-primary);
-  --auth-primary-hover: #4dabf7;
-  --auth-error-color: var(--bs-danger);
+  // Colors
+  --white-color: #000000;
+  --black-color: #ffffff;
+
+  // Sidebar related colors
+  --sidebar-bg: #1a1a1a ; 
+  --sidebar-hover-bg: #2d2d2d ; 
+
+  // Primary color schema
+  --primary-color-lightest: #1b2a40;
+  --primary-color-lighter:  #234673;
+  --primary-color-light:    #2f80ed;
+  --primary-color:          #2f80ed;
+  --primary-color-dark:     #1c68d3;
+  --primary-color-darker:   #1451a5;
+  --primary-color-darkest:  #0e386f;
+
+  // Secondary color schema
+  --secondary-color-lightest: #343a40;
+  --secondary-color-lighter:  #3e444a;
+  --secondary-color-light:    #495057;
+  --secondary-color:          #868e96;
+  --secondary-color-dark:     #adb5bd;
+  --secondary-color-darker:   #ced4da;
+  --secondary-color-darkest:  #dee2e6;
+
+  // Colors
+  --auth-primary-color: #2f80ed;
+  --auth-primary-hover: #1c68d3;
+  --auth-error-color: #ff6b6b;
+  --auth-success-color: #51cf66;
+  --auth-warning-color: #ffd43b;
+  --auth-text-muted: #adb5bd;
+  --auth-muted-color: #868e96;
+  
+  // Background
+  --auth-bg-gradient: linear-gradient(135deg, #212529 0%, #343a40 100%);
+  --bs-body-bg: #222222;
+  
+  // Font sizes (same as light)
+  --font-size-base: 16px;
+  --font-size-xs: 11px;
+  --font-size-xxs: 10px;
+  --font-size-sm: 12px;
+  --font-size-sm-plus: 13px;
+  --font-size-md: 14px;
+  --font-size-md-plus: 15px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-xxl: 24px;
+  --font-size-xxxl: 28px;
+  --font-size-display: 32px;
+  --font-size-display-md: 36px;
+  --font-size-display-lg: 38px;
+  --font-size-display-xl: 48px;
+
+  // Heading sizes (same as light)
+  --heading-1: var(--font-size-display);
+  --heading-2: var(--font-size-xxxl);
+  --heading-3: var(--font-size-xxl);
+  --heading-4: var(--font-size-xl);
+  --heading-5: var(--font-size-lg);
+
+  // Line heights
+  --line-height-tight: 1.2;
+  --line-height-base: 1.5;
+  --line-height-relaxed: 1.6;
+
+  // Font weights
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  // Font family
+  --font-family-base: "PT Sans", var(--bs-body-font-family);
+
+  // Input sizes (same as light)
+  --input-height-base: 50px;
+  --input-height-sm: 40px;
+  --input-height-lg: 56px;
+
+  // Button sizes (same as light)
+  --button-height-sm: 32px;
+  --button-height-base: 42px;
+  --button-height-lg: 50px;
+
+  // Border radius (same as light)
+  --border-radius-sm: 6px;
+  --border-radius-base: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --border-radius-circle: 50%;
+
+  // Border color
+  --bs-border-color-lightest: #1e2124;
+  --bs-border-color-lighter:  #2a2f34;
+  --bs-border-color-light:    #343a40;
+  --bs-border-color:          #495057;
+  --bs-border-color-dark:     #6c757d;
+  --bs-border-color-darker:   #adb5bd;
+  --bs-border-color-darkest:  #e9ecef;
+  
+  // Input field related color 
+  --gray-color-light: #1e1f21;
+  --gray-color-very-light: #2c2e31;
+  --grya-color-medium-light: #3b3d40;
+
+  // Button style related css 
+  --button-height: 45px;
+
+  // Google signin button related css 
+  --google-signin-button-hover-background: #2a2a2a;
+  
+  // Scrollbar styles
+  --scrollbar-track-bg: rgba(255, 255, 255, 0.05);
+  --scrollbar-thumb-bg: rgba(255, 255, 255, 0.2);
+  --scrollbar-thumb-hover-bg: rgba(255, 255, 255, 0.3);
 }
-
-// Legacy SCSS variables for backward compatibility
-$primary-color: #2f80ed;
-$success-color: #52c41a;
-
-// Dark theme
-$dark-bg: #212121;
-$dark-card-bg: #2f2f2f;
-$dark-text: #ececec;
-$dark-input-bg: #3a3a3a;
-$dark-border: #444444;
-
-// Light theme  
-$light-bg: #f5f7fa;
-$light-card-bg: #ffffff;
-$light-text: #1f2937;
-$light-input-bg: #ffffff;
-$light-border: #e5e7eb;
-
-$muted-color: #9aa0a6;
-$light-muted-color: #6b7280;
-$border-radius: 8px;

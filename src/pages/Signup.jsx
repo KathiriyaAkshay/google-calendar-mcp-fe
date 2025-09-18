@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Form, Input, Row, Col, Typography} from "antd";
+import { Form, Input, Typography, Divider } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import SubmitBtn from "../components/SubmitBtn";
 import GoogleSignIn from "../components/GoogleSignIn";
@@ -37,12 +37,13 @@ export default function Signup() {
             </div>
             <div className="auth-visual-text">
               <Title level={2} className="visual-title">
-                Welcome to Google Calender Mcp
+                Welcome to Google Calendar MCP
               </Title>
               <Text className="visual-subtitle">
-                Transform your finance management with intelligent AI-powered insights and automated solutions.
+                Simplify scheduling and collaboration with AI-powered automation, smart reminders, and seamless calendar management.
               </Text>
             </div>
+
           </div>
         </div>
 
@@ -58,23 +59,18 @@ export default function Signup() {
 
               <Form.Item
                 name="email"
-                label="Email"
-                rules={[{ required: true, message: "Please enter email" }]}
+                label="Emailaddress"
+                rules={[{ required: true, message: "Please enter email address" }]}
               >
-                <Input placeholder="Enter your email" className="auth-input" autoComplete="new-email" />
+                <Input placeholder="Enter your email address" className="auth-input" autoComplete="new-email" />
               </Form.Item>
 
-              
               <Form.Item>
                 <SubmitBtn label="Create Account" isLoading={loading} />
               </Form.Item>
 
-              <div className="divider-section">
-                <div className="divider-line"></div>
-                <Text className="divider-text">or</Text>
-                <div className="divider-line"></div>
-              </div>
-
+              <Divider className="authentication-divider-section">OR</Divider>
+              
               <Form.Item className="google-sign-in">
                 <GoogleSignIn
                   text="Sign up with Google"

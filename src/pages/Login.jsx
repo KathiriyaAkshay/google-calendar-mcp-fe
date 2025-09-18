@@ -8,6 +8,7 @@ import {
   Row,
   Col,
   Typography,
+  Divider,
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import SubmitBtn from "../components/SubmitBtn";
@@ -27,7 +28,7 @@ export default function Login() {
 
   const onFinish = async (values) => {
     setLoading(true);
-    
+
     try {
       navigate("/home", { replace: true });
     } catch (error) {
@@ -40,6 +41,7 @@ export default function Login() {
   return (
     <div className="auth-page-split" data-theme={theme}>
       <div className="auth-split-container">
+
         {/* Left Side - Illustration */}
         <div className="auth-visual-section">
           <div className="auth-visual-content">
@@ -52,12 +54,13 @@ export default function Login() {
             </div>
             <div className="auth-visual-text">
               <Title level={2} className="visual-title">
-                Welcome to Google Calender Mcp
+                Welcome to Google Calendar MCP
               </Title>
               <Text className="visual-subtitle">
-                Transform your finance management with intelligent AI-powered insights and automated solutions.
+                Simplify scheduling and collaboration with AI-powered automation, smart reminders, and seamless calendar management.
               </Text>
             </div>
+
           </div>
         </div>
 
@@ -72,7 +75,7 @@ export default function Login() {
             <Form layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed} className="auth-form">
               <Form.Item
                 name="email"
-                label="Username or email"
+                label="Email address"
                 rules={[{ required: true, message: "Please enter email" }]}
               >
                 <Input
@@ -82,17 +85,21 @@ export default function Login() {
                 />
               </Form.Item>
 
-              <Form.Item
-                name="password"
-                label="Password"
-                rules={[{ required: true, message: "Please enter password" }]}
-              >
-                <Input.Password
-                  placeholder="Enter your password"
-                  className="auth-input"
-                  autoComplete="current-password"
-                />
-              </Form.Item>
+              <div style={{
+                marginTop: "20px"
+              }}>
+                <Form.Item
+                  name="password"
+                  label="Password"
+                  rules={[{ required: true, message: "Please enter password" }]}
+                >
+                  <Input.Password
+                    placeholder="Enter your password"
+                    className="auth-input"
+                    autoComplete="current-password"
+                  />
+                </Form.Item>
+              </div>
 
               <div className="form-options">
                 <Checkbox>Keep me logged in</Checkbox>
@@ -101,15 +108,13 @@ export default function Login() {
                 </Link>
               </div>
 
-              <Form.Item>
+              <Form.Item style={{
+                marginTop: "15px"
+              }}>
                 <SubmitBtn label="Sign in" isLoading={loading} htmlType="submit" />
               </Form.Item>
 
-              <div className="divider-section">
-                <div className="divider-line"></div>
-                <Text className="divider-text">or</Text>
-                <div className="divider-line"></div>
-              </div>
+              <Divider className="authentication-divider-section">OR</Divider>
 
               <Form.Item className="google-sign-in">
                 <GoogleSignIn
@@ -121,12 +126,13 @@ export default function Login() {
               </Form.Item>
 
               <div className="auth-footer">
-                <Text>Don't have an account? </Text>
+                <Text>Don&apos;t have an account? </Text>
                 <Link to="/signup">Sign up for free</Link>
               </div>
             </Form>
           </div>
         </div>
+
       </div>
     </div>
   );

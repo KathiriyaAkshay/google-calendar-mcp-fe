@@ -17,6 +17,7 @@ import {
   SearchOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  CalendarOutlined,
 } from "@ant-design/icons";
 import { useTheme } from "../contexts/ThemeContext";
 import SettingsDropdown from "./SettingsDropdown";
@@ -93,7 +94,7 @@ const CommonSidebar = ({
       onClick: toggleSidebar,
     },
     {
-      icon: <MessageOutlined />,
+      icon: <CalendarOutlined />,
       tooltip: "Recent Chats",
       onClick: toggleSidebar,
     },
@@ -115,11 +116,6 @@ const CommonSidebar = ({
         <div className="logo-section">
           {!isCollapsed && (
             <>
-              <Avatar size={32} style={{ backgroundColor: "#2f80ed" }}>
-                <Text style={{ color: "white", fontWeight: "bold" }}>
-                  GM
-                </Text>
-              </Avatar>
               <Title level={4} className="app-title">
                 {title}
               </Title>
@@ -143,23 +139,6 @@ const CommonSidebar = ({
       {isCollapsed ? (
         // Collapsed sidebar - show avatar and action buttons
         <div className="collapsed-content">
-          <div className="collapsed-avatar">
-            <Tooltip title={title} placement="right">
-              <Avatar 
-                size={40} 
-                style={{ 
-                  backgroundColor: "#2f80ed",
-                  cursor: "pointer"
-                }}
-                onClick={toggleSidebar}
-              >
-                <Text style={{ color: "white", fontWeight: "bold", fontSize: "16px" }}>
-                  GM
-                </Text>
-              </Avatar>
-            </Tooltip>
-          </div>
-          
           <div className="collapsed-actions">
             {actions.filter(action => action.tooltip !== "Settings").map((action, index) => (
               <Tooltip key={index} title={action.tooltip} placement="right">
@@ -179,7 +158,6 @@ const CommonSidebar = ({
               <SettingsDropdown 
                 className="collapsed-settings-btn"
                 iconOnly={true}
-                type="text"
               />
             </Tooltip>
           </div>
@@ -234,6 +212,7 @@ const CommonSidebar = ({
                 />
               )}
 
+              {/* Conversation data related information  */}
               <div className="time-section">
                 <div className="section-header">
                   <Text className="time-label">This Week</Text>
@@ -244,6 +223,7 @@ const CommonSidebar = ({
                     </Text>
                   )}
                 </div>
+                
                 {filteredConversations.length > 0 ? (
                   <List
                     size="small"
@@ -257,7 +237,7 @@ const CommonSidebar = ({
                         style={{ cursor: "pointer" }}
                       >
                         <div className="conversation-content">
-                          <MessageOutlined className="conversation-icon" />
+                          <CalendarOutlined className="conversation-icon" />
                           <div>
                             <Text className="conversation-title">
                               <HighlightText
@@ -289,12 +269,13 @@ const CommonSidebar = ({
                     </Text>
                   </div>
                 )}
+
               </div>
             </div>
           ) : null}
 
           <div className="sidebar-footer">
-            <SettingsDropdown className="settings-btn" />
+            <SettingsDropdown />
           </div>
         </>
       )}

@@ -24,12 +24,26 @@ export default function App() {
         <Content>
           <Routes>
             <Route path="/" element={<Login />} />
+
+            {/* Login page route */}
             <Route path="/login" element={<Login />} />
+            
+            {/* Signup page route  */}
             <Route path="/signup" element={<Signup />} />
+            
+            {/* Forgetpassword related route  */}
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            
+            {/* Homepage  */}
             <Route path="/home" element={<Dashboard />} />
+            
+            {/* Setting related page  */}
             <Route path="/settings" element={<Settings />} />
+            
+            {/* Integration related page  */}
             <Route path="/integrations" element={<Integrations />} />
+            
+            {/* Personal information related page  */}
             <Route path="/personal" element={<Personal />} />
           </Routes>
         </Content>

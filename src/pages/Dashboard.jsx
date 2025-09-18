@@ -10,11 +10,6 @@ import {
 } from "antd";
 import {
   SendOutlined,
-  LikeOutlined,
-  DislikeOutlined,
-  CopyOutlined,
-  LikeFilled,
-  DislikeFilled,
   PlusOutlined,
   SearchOutlined,
   MessageOutlined,
@@ -135,6 +130,8 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-container" data-theme={theme}>
+
+      {/* Common sidebar component  */}
       <CommonSidebar
         title={appConfig.title}
         conversationHistory={conversationHistory}
@@ -148,7 +145,8 @@ export default function Dashboard() {
         collapsed={sidebarCollapsed}
         onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
       />
-      
+
+      {/* Dashboard main component  */}
       <div className="dashboard-main">
         <div className="chat-header">
           <div className="user-info">
@@ -243,6 +241,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+      
     </div>
   );
 }
