@@ -8,7 +8,9 @@ import { ThemeProvider, useTheme } from './contexts/ThemeContext'
 import App from './App'
 import './styles/main.scss'
 import './styles/dashboard.scss'
-// Note: Auth styles are imported directly in auth pages
+import './styles/password-pages.scss'
+import './styles/forgot-password.scss'
+import './service'
 
 const queryClient = new QueryClient()
 

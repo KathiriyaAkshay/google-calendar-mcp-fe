@@ -1,24 +1,32 @@
 import React, { useState } from "react";
-import { Form, Input, Typography, Button } from "antd";
+import { Form, Input, Typography, Button, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import SubmitBtn from "../components/SubmitBtn";
 import { useTheme } from "../contexts/ThemeContext";
+import { useMutation } from "@tanstack/react-query";
+import userAuthentication from "../service/userAuthentication";
+import { USER_AUTHENTICATION_MESSAGE } from "../constant/api.constant";
 
 const { Title, Text } = Typography;
 
 function ForgotPassword() {
-  const [loading, setLoading] = useState(false);
-  const [emailSent, setEmailSent] = useState(false);
+  const [emailSent, setEmailSent] = useState(true);
   const navigate = useNavigate();
   const { theme } = useTheme();
 
-  const onFinish = (values) => {
-    setLoading(true);
-    // TODO: call your forgot password API
-    setTimeout(() => {
-      setLoading(false);
+  const { mutate, isPending: loading } = useMutation({
+    mutationFn: (values) => userAuthentication.forgetPasword(values),
+    onSuccess: (response) => {
+      message.success(USER_AUTHENTICATION_MESSAGE.PASSWORD_FORGOT_SUCCESSFULLY);
       setEmailSent(true);
-    }, 1000);
+    },
+    onError: (error) => {
+      message.error(error?.message || USER_AUTHENTICATION_MESSAGE.COMMON_ERROR_MESSAGE);
+    },
+  });
+
+  const onFinish = (values) => {
+    mutate(values);
   };
 
   if (emailSent) {
@@ -58,26 +66,34 @@ function ForgotPassword() {
 
               <div className="forgot-password-success">
                 <div className="success-content">
-                  <div className="success-icon">✓</div>
+                  <div className="success-icon-container">
+                    <div className="success-icon-circle">
+                      <svg viewBox="0 0 24 24" fill="none" className="success-icon-svg">
+                        <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
+                          stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                  </div>
                   <Text className="success-text">
                     If an account with that email exists, you'll receive password reset instructions shortly.
                   </Text>
                 </div>
 
-                <div className="auth-footer">
-                  <Text>Remember your password? </Text>
-                  <Link to="/login">Back to sign in</Link>
-                </div>
-
-                <div className="auth-footer">
-                  <Text>Didn't receive the email? </Text>
+                <div className="success-actions">
                   <Button 
-                    type="link" 
-                    onClick={() => setEmailSent(false)}
-                    className="resend-link"
+                    type="primary" 
+                    block
+                    onClick={() => navigate("/login")}
+                    className="back-to-login-btn"
                   >
-                    Try again
+                    Back to Sign In
                   </Button>
+                  
+                  <div className="try-again-btn"
+                    onClick={() => setEmailSent(false)}
+                  >
+                    Didn't receive the email? Try again
+                  </div>
                 </div>
               </div>
             </div>
@@ -138,7 +154,7 @@ function ForgotPassword() {
               </Form.Item>
 
               <Form.Item>
-                <SubmitBtn label="Send Reset Instructions" isLoading={loading} />
+                <SubmitBtn label="Send Reset Instructions" isLoading={loading} htmlType="submit" />
               </Form.Item>
 
               <div className="auth-footer">

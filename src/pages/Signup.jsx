@@ -1,26 +1,42 @@
 import React, { useState } from "react";
-import { Form, Input, Typography, Divider } from "antd";
+import { Form, Input, Typography, Divider, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import SubmitBtn from "../components/SubmitBtn";
 import GoogleSignIn from "../components/GoogleSignIn";
 import { useTheme } from '../contexts/ThemeContext';
+import userAuthentication from "../service/userAuthentication";
+import { useMutation } from "@tanstack/react-query";
+import { USER_AUTHENTICATION_MESSAGE } from "../constant/api.constant";
 
 const { Title, Text } = Typography;
 
 export default function Signup() {
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { theme } = useTheme();
 
+  const { mutate, isPending: loading } = useMutation({
+    mutationFn: (values) => userAuthentication.register(values),
+    onSuccess: (response) => {
+      message.success(USER_AUTHENTICATION_MESSAGE.SIGNUP_SUCCESSFULLY);
+    },
+    onError: (error) => {
+      message.error(error?.message || USER_AUTHENTICATION_MESSAGE.COMMON_ERROR_MESSAGE);
+    },
+  });
+
   const onFinish = (values) => {
-    setLoading(true);
-    // TODO: call your signup API
-    setTimeout(() => {
-      setLoading(false);
-      // Redirect to verify email or dashboard
-      navigate("/");
-    }, 1000);
+    mutate({
+      email: values.email
+    });
   };
+
+  const {mutate: googleAuthRedirectURL, isPending: googleAuthRedirectURLLoading} = useMutation({
+    mutationFn: () => userAuthentication.googleAuthRedirectURL(),
+    onSuccess: (response) => {
+      window.location.href = response.data ; 
+    },
+    onError: (error) => {}
+  });
 
   return (
     <div className="auth-page-split" data-theme={theme}>
@@ -66,15 +82,16 @@ export default function Signup() {
               </Form.Item>
 
               <Form.Item>
-                <SubmitBtn label="Create Account" isLoading={loading} />
+                <SubmitBtn label="Create Account" isLoading={loading} htmlType="submit" />
               </Form.Item>
 
               <Divider className="authentication-divider-section">OR</Divider>
-              
+
               <Form.Item className="google-sign-in">
                 <GoogleSignIn
                   text="Sign up with Google"
-                  onSuccess={(c) => console.log("google", c)}
+                  onSuccess={googleAuthRedirectURL}
+                  loading={googleAuthRedirectURLLoading}
                 />
               </Form.Item>
 

@@ -12,7 +12,9 @@ import {
   Slider,
   Radio,
   Alert,
+  Divider,
 } from "antd";
+import { Link } from "react-router-dom";
 import {
   SettingOutlined,
   BellOutlined,
@@ -369,6 +371,21 @@ export default function Settings() {
           className="content-section"
         >
           <Space direction="vertical" style={{ width: "100%" }} size="large">
+            <div>
+              <Text strong>Password & Security</Text>
+              <br />
+              <Text type="secondary" style={{ fontSize: "12px" }}>
+                Manage your account password and security settings
+              </Text>
+              <br />
+              <Link to="/password-config">
+                <Button type="primary" icon={<LockOutlined />} style={{ marginTop: 8 }}>
+                  Configure Password Settings
+                </Button>
+              </Link>
+            </div>
+            
+            <Divider />
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div>
                 <Text strong>Activity Tracking</Text>

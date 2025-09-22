@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Base API configuration
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://api.example.com';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.example.com';
 const API_TIMEOUT = 30000; // 30 seconds
 
 // Create axios instance with default config
@@ -84,5 +84,12 @@ apiClient.interceptors.response.use(
     }
   }
 );
+
+// Add HMR handling for development
+if (import.meta.hot) {
+  import.meta.hot.accept((newModule) => {
+    console.log('API Client module updated');
+  });
+}
 
 export default apiClient;

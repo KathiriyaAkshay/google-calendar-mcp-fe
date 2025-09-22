@@ -7,6 +7,8 @@ import ThemeToggle from './components/ThemeToggle'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import ForgotPassword from './pages/ForgotPassword'
+import PasswordConfig from './pages/PasswordConfig'
+import ResetPassword from './pages/ResetPassword'
 import Dashboard from './pages/Dashboard'
 import Settings from './pages/Settings'
 import Integrations from './pages/Integrations'
@@ -36,6 +38,12 @@ export default function App() {
             
             {/* Forgetpassword related route  */}
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            
+            {/* Password configuration route */}
+            <Route path="/password-config" element={<PasswordConfig />} />
+            
+            {/* Password reset route */}
+            <Route path="/reset-password" element={<ResetPassword />} />
             
             {/* Homepage  */}
             <Route path="/home" element={<Dashboard />} />

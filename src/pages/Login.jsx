@@ -9,34 +9,44 @@ import {
   Col,
   Typography,
   Divider,
+  message
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import SubmitBtn from "../components/SubmitBtn";
 import GoogleSignIn from "../components/GoogleSignIn";
 import { useTheme } from "../contexts/ThemeContext";
+import userAuthentication from "../service/userAuthentication";
+import { useMutation } from "@tanstack/react-query";
+import { USER_AUTHENTICATION_MESSAGE } from "../constant/api.constant";
+
 
 const { Title, Text } = Typography;
 
 export default function Login() {
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { theme } = useTheme();
 
-  const onFinishFailed = (errorInfo) => {
-    console.log('Form validation failed:', errorInfo);
-  };
+  const { mutate, isPending: loading } = useMutation({
+    mutationFn: (values) => userAuthentication.login(values),
+    onSuccess: (response) => {
+      message.success(USER_AUTHENTICATION_MESSAGE.USER_LOGIN_SUCCESSFULLY);
+    },
+    onError: (error) => {
+      message.error(error?.message || USER_AUTHENTICATION_MESSAGE.COMMON_ERROR_MESSAGE);
+    },
+  });
 
   const onFinish = async (values) => {
-    setLoading(true);
-
-    try {
-      navigate("/home", { replace: true });
-    } catch (error) {
-      console.error("Login error:", error);
-    } finally {
-      setLoading(false);
-    }
+    mutate(values);
   };
+
+  const {mutate: googleAuthRedirectURL, isPending: googleAuthRedirectURLLoading} = useMutation({
+    mutationFn: () => userAuthentication.googleAuthRedirectURL(),
+    onSuccess: (response) => {
+      window.location.href = response.data ; 
+    },
+    onError: (error) => {}
+  });
 
   return (
     <div className="auth-page-split" data-theme={theme}>
@@ -72,7 +82,7 @@ export default function Login() {
               <Text className="form-subtitle">Welcome back! Please enter your details.</Text>
             </div>
 
-            <Form layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed} className="auth-form">
+            <Form layout="vertical" onFinish={onFinish} className="auth-form">
               <Form.Item
                 name="email"
                 label="Email address"
@@ -119,9 +129,8 @@ export default function Login() {
               <Form.Item className="google-sign-in">
                 <GoogleSignIn
                   text="Sign in with Google"
-                  onSuccess={(credentialResponse) => {
-                    console.log("Google Sign-In successful", credentialResponse);
-                  }}
+                  onSuccess={googleAuthRedirectURL}
+                  loading={googleAuthRedirectURLLoading}
                 />
               </Form.Item>
 
