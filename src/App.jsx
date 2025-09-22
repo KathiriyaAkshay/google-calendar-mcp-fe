@@ -1,6 +1,7 @@
 import React from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { Layout } from 'antd'
+import { QueryClientProvider } from '@tanstack/react-query'
 import { ThemeProvider } from './contexts/ThemeContext'
 import ThemeToggle from './components/ThemeToggle'
 import Login from './pages/Login'
@@ -10,18 +11,20 @@ import Dashboard from './pages/Dashboard'
 import Settings from './pages/Settings'
 import Integrations from './pages/Integrations'
 import Personal from './pages/Personal'
+import queryClient from './service/queryClient'
 
 const { Content } = Layout
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <Layout className="app-layout" style={{ minHeight: '100vh' }}>
-        {/* Floating Theme Toggle */}
-        <div className="floating-theme-toggle">
-          <ThemeToggle />
-        </div>
-        <Content>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <Layout className="app-layout" style={{ minHeight: '100vh' }}>
+          {/* Floating Theme Toggle */}
+          <div className="floating-theme-toggle">
+            <ThemeToggle />
+          </div>
+          <Content>
           <Routes>
             <Route path="/" element={<Login />} />
 
@@ -49,5 +52,6 @@ export default function App() {
         </Content>
       </Layout>
     </ThemeProvider>
+    </QueryClientProvider>
   )
 }
