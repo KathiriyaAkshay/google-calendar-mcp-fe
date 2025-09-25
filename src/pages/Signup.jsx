@@ -7,7 +7,8 @@ import { useTheme } from '../contexts/ThemeContext';
 import userAuthentication from "../service/userAuthentication";
 import { useMutation } from "@tanstack/react-query";
 import { USER_AUTHENTICATION_MESSAGE } from "../constant/api.constant";
-
+import { auth, provider, signInWithPopup } from "../config/firebaseconfig";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 const { Title, Text } = Typography;
 
 export default function Signup() {
@@ -25,18 +26,28 @@ export default function Signup() {
   });
 
   const onFinish = (values) => {
-    mutate({
-      email: values.email
-    });
+    let email = values.email;
+    let password = values.password;
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        sendEmailVerification(userCredential.user);
+        message.success(USER_AUTHENTICATION_MESSAGE.VERIFICATION_EMAIL_SENT);
+      })
+      .catch((error) => {
+        message.error(error?.message || USER_AUTHENTICATION_MESSAGE.COMMON_ERROR_MESSAGE);
+      });
+    
   };
 
-  const {mutate: googleAuthRedirectURL, isPending: googleAuthRedirectURLLoading} = useMutation({
-    mutationFn: () => userAuthentication.googleAuthRedirectURL(),
-    onSuccess: (response) => {
-      window.location.href = response.data ; 
-    },
-    onError: (error) => {}
-  });
+  // Signup With google related functionality 
+  const SignupWithGoogle = async () => {
+    const result = await signInWithPopup(auth, provider);
+    
+    // Reterive email, token related information 
+    const email = result.user.email ; 
+    const token = result.user.accessToken ; 
+  }
 
   return (
     <div className="auth-page-split" data-theme={theme}>
@@ -75,10 +86,18 @@ export default function Signup() {
 
               <Form.Item
                 name="email"
-                label="Emailaddress"
+                label="Email address"
                 rules={[{ required: true, message: "Please enter email address" }]}
               >
                 <Input placeholder="Enter your email address" className="auth-input" autoComplete="new-email" />
+              </Form.Item>
+
+              <Form.Item
+                name="password"
+                label="Password"
+                rules={[{ required: true, message: "Please enter your password" }]}
+              >
+                <Input.Password placeholder="Enter your password" className="auth-input" autoComplete="new-password" />
               </Form.Item>
 
               <Form.Item>
@@ -90,8 +109,7 @@ export default function Signup() {
               <Form.Item className="google-sign-in">
                 <GoogleSignIn
                   text="Sign up with Google"
-                  onSuccess={googleAuthRedirectURL}
-                  loading={googleAuthRedirectURLLoading}
+                  onSuccess={SignupWithGoogle}
                 />
               </Form.Item>
 

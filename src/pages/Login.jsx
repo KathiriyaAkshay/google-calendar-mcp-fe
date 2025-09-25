@@ -18,6 +18,7 @@ import { useTheme } from "../contexts/ThemeContext";
 import userAuthentication from "../service/userAuthentication";
 import { useMutation } from "@tanstack/react-query";
 import { USER_AUTHENTICATION_MESSAGE } from "../constant/api.constant";
+import { auth, provider, signInWithPopup } from "../config/firebaseconfig";
 
 
 const { Title, Text } = Typography;
@@ -40,13 +41,14 @@ export default function Login() {
     mutate(values);
   };
 
-  const {mutate: googleAuthRedirectURL, isPending: googleAuthRedirectURLLoading} = useMutation({
-    mutationFn: () => userAuthentication.googleAuthRedirectURL(),
-    onSuccess: (response) => {
-      window.location.href = response.data ; 
-    },
-    onError: (error) => {}
-  });
+  // Google signin related functionality 
+  const LoginWithGoogle = async () => {
+    const result = await signInWithPopup(auth, provider);
+    
+    // Reterive email, token related information 
+    const email = result.user.email ; 
+    const token = result.user.accessToken ; 
+  }
 
   return (
     <div className="auth-page-split" data-theme={theme}>

@@ -5,4 +5,5 @@ export let USER_AUTHENTICATION_MESSAGE = {
     USER_LOGIN_SUCCESSFULLY : "User login successfully!",
     PASSWORD_FORGOT_SUCCESSFULLY : "Password reset instructions sent to your email!",
     PASSWORD_RESET_SUCCESSFULLY : "Password reset successfully! You can now login with your new password.",
+    VERIFICATION_EMAIL_SENT : "Verification email sent to your registered email.",
 }
