@@ -20,13 +20,16 @@ import { useMutation } from "@tanstack/react-query";
 import { USER_AUTHENTICATION_MESSAGE } from "../constant/api.constant";
 import { auth, provider, signInWithPopup } from "../config/firebaseconfig";
 import PAGE_ROUTE from "../constant/page.constant";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const { Title, Text } = Typography;
 
 export default function Login() {
   const navigate = useNavigate();
   const { theme } = useTheme();
+  const [isLoginLoading, setIsLoginLoading] = useState(false);
 
+  // User login related functionality 
   const { mutate: userLogin, isPending: loading } = useMutation({
     mutationFn: (values) => userAuthentication.login(values),
     onSuccess: (response) => {
@@ -39,8 +42,40 @@ export default function Login() {
     },
   });
 
+  // Check user email related functionality 
+  const { mutateAsync: checkUserEmail, isPending: checkingEmail } = useMutation({
+    mutationFn: (email) => userAuthentication.checkUserEmail(email),
+    onSuccess: (response) => {
+      return response;
+    },
+    onError: (error) => {
+      message.error(error?.message || USER_AUTHENTICATION_MESSAGE.COMMON_ERROR_MESSAGE);
+    },
+  });
+
+  // Email and password login related functionaloty
   const onFinish = async (values) => {
-    userLogin(values);
+    try {
+      setIsLoginLoading(true);
+
+      // Check user email 
+      const userEmail = await checkUserEmail(values.email);
+      if (userEmail.data.exists) {
+        message.error(USER_AUTHENTICATION_MESSAGE.USER_ALREADY_EXISTS);
+        return;
+      } else {
+        const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
+        userLogin({
+          email: values.email,
+          is_google_signup: false
+        });
+      }
+      setIsLoginLoading(false);
+    } catch (error) {
+      message.error(error?.message || USER_AUTHENTICATION_MESSAGE.COMMON_ERROR_MESSAGE);
+    } finally {
+      setIsLoginLoading(false);
+    }
   };
 
   // Google signin related functionality 
@@ -130,7 +165,7 @@ export default function Login() {
               <Form.Item style={{
                 marginTop: "15px"
               }}>
-                <SubmitBtn label="Sign in" isLoading={loading} htmlType="submit" />
+                <SubmitBtn label="Sign in" isLoading={isLoginLoading} htmlType="submit" />
               </Form.Item>
 
               <Divider className="authentication-divider-section">OR</Divider>
