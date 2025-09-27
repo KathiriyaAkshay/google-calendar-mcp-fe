@@ -21,6 +21,8 @@ import {
 } from "@ant-design/icons";
 import { useTheme } from "../contexts/ThemeContext";
 import SettingsDropdown from "./SettingsDropdown";
+import { useQuery } from "@tanstack/react-query";
+import userAuthentication from "../service/userAuthentication";
 
 const { Title, Text } = Typography;
 
@@ -64,18 +66,18 @@ const DashboardLayout = ({
   searchQuery = "",
   onSearchChange,
   onClearSearch,
-  userInfo = {
-    name: "Keyur Vaghasiya",
-    email: "keyur@alysio.ai",
-    avatar: "KV",
-    avatarColor: "#52c41a"
-  },
+  userInfo = {},
   customSidebarContent,
   customActions = []
 }) => {
   const { theme } = useTheme();
   const [isInitialized, setIsInitialized] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+  const { data: me } = useQuery({
+    queryKey: ["me"],
+    queryFn: userAuthentication.getMe,
+  });
 
   // Initialize layout on mount
   useEffect(() => {
@@ -324,8 +326,7 @@ const DashboardLayout = ({
                 <Avatar size={24} style={{ backgroundColor: userInfo.avatarColor }}>
                   {userInfo.avatar}
                 </Avatar>
-                <Text className="username">{userInfo.name}</Text>
-                <Text className="email">{userInfo.email}</Text>
+                <Text className="email">{me?.email || userInfo.email}</Text>
               </div>
             </div>
 

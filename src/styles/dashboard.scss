@@ -141,6 +141,7 @@
 
                 .anticon {
                     font-size: var(--font-size-lg);
+                    color: var(--black-color) !important;
                 }
             }
         }
@@ -551,15 +552,13 @@
                 align-items: center;
                 gap: 10px;
 
-                .username {
-                    color: var(--bs-body-color);
-                    font-weight: var(--font-weight-semibold);
-                    font-size: var(--font-size-md);
+                .ant-avatar{
+                    background-color: var(--primary-color) !important;
                 }
 
                 .email {
                     color: var(--bs-secondary-color);
-                    font-size: var(--font-size-sm);
+                    font-size: var(--font-size-md);
                 }
             }
         }
@@ -691,6 +690,7 @@
 
                             .anticon {
                                 font-size: var(--font-size-md);
+                                color: var(--black-color) !important;
                             }
                         }
                     }
@@ -892,6 +892,7 @@
 
                     .anticon {
                         font-size: var(--font-size-base);
+                        color: var(--black-color) !important;
                     }
                 }
             }

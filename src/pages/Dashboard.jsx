@@ -57,7 +57,7 @@ export default function Dashboard() {
   const handleSend = () => {
     if (!inputValue.trim() || loading) return;
     setLoading(true);
-    
+
     const userMessage = {
       id: Date.now(),
       type: "user",
@@ -86,7 +86,7 @@ export default function Dashboard() {
 
   const handleNewConversation = () => {
     const { newChatId, updatedChats } = ConversationService.createNewConversation(chats);
-    
+
     setChats(updatedChats);
     setCurrentChatId(newChatId);
     message.success("New conversation started!");
@@ -123,7 +123,7 @@ export default function Dashboard() {
     {
       icon: <SettingOutlined />,
       tooltip: "Settings",
-      onClick: () => {},
+      onClick: () => { },
     },
   ];
 
@@ -140,85 +140,85 @@ export default function Dashboard() {
       getCustomActions={getCustomActions}
     >
       <div className="chat-messages">
-            {messages.map((message) => (
-              <div key={message.id} className={`message ${message.type}`}>
-                {message.type === "assistant" && (
-                  <Avatar size={32} style={{ backgroundColor: "#2f80ed", marginRight: 12 }}>
-                    <Text style={{ color: "#fff", fontWeight: "bold" }}>AI</Text>
-                  </Avatar>
-                )}
-                {message.type === "user" && (
-                  <div className="user-message-wrapper">
-                    <div className="message-content user-message">
-                      <div className="message-text">
-                        <Text style={{ color: "white" }}>
-                          {message.content}
-                        </Text>
-                      </div>
-                      <div className="message-meta">
-                        <Text type="secondary" style={{ fontSize: "12px", color: "rgba(255,255,255,0.8)" }}>
-                          {message.timestamp}
-                        </Text>
-                      </div>
-                    </div>
+        {messages.map((message) => (
+          <div key={message.id} className={`message ${message.type}`}>
+            {message.type === "assistant" && (
+              <Avatar size={32} style={{ backgroundColor: "#2f80ed", marginRight: 12 }}>
+                <Text style={{ color: "#fff", fontWeight: "bold" }}>AI</Text>
+              </Avatar>
+            )}
+            {message.type === "user" && (
+              <div className="user-message-wrapper">
+                <div className="message-content user-message">
+                  <div className="message-text">
+                    <Text style={{ color: "white" }}>
+                      {message.content}
+                    </Text>
                   </div>
-                )}
-                {message.type === "assistant" && (
-                  <div className="message-content">
-                    <div className="message-text">
-                      <Text style={{ color: "var(--bs-body-color)" }}>
-                        {message.content}
-                      </Text>
-                    </div>
-                    <div className="message-meta">
-                      <Text type="secondary" style={{ fontSize: "12px" }}>
-                        {message.timestamp}
-                      </Text>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-            {loading && (
-              <div className="message assistant">
-                <Avatar size={32} style={{ backgroundColor: "#2f80ed", marginRight: 12 }}>
-                  <Text style={{ color: "#fff", fontWeight: "bold" }}>AI</Text>
-                </Avatar>
-                <div className="message-content">
-                  <div className="typing-indicator">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                  <div className="message-meta">
+                    <Text type="secondary" style={{ fontSize: "12px", color: "rgba(255,255,255,0.8)" }}>
+                      {message.timestamp}
+                    </Text>
                   </div>
                 </div>
               </div>
             )}
-        </div>
-
-        <div className="chat-input-section">
-          <div className="input-container">
-            <TextArea
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Ask me anything about your calendar..."
-              autoSize={{ minRows: 1, maxRows: 4 }}
-              className="chat-input"
-              onPressEnter={(e) => {
-                if (!e.shiftKey) {
-                  e.preventDefault();
-                  handleSend();
-                }
-              }}
-            />
-            <Button
-              type="primary"
-              icon={<SendOutlined />}
-              onClick={handleSend}
-              loading={loading}
-              className="send-btn"
-            />
+            {message.type === "assistant" && (
+              <div className="message-content">
+                <div className="message-text">
+                  <Text style={{ color: "var(--bs-body-color)" }}>
+                    {message.content}
+                  </Text>
+                </div>
+                <div className="message-meta">
+                  <Text type="secondary" style={{ fontSize: "12px" }}>
+                    {message.timestamp}
+                  </Text>
+                </div>
+              </div>
+            )}
           </div>
+        ))}
+        {loading && (
+          <div className="message assistant">
+            <Avatar size={32} style={{ backgroundColor: "#2f80ed", marginRight: 12 }}>
+              <Text style={{ color: "#fff", fontWeight: "bold" }}>AI</Text>
+            </Avatar>
+            <div className="message-content">
+              <div className="typing-indicator">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="chat-input-section">
+        <div className="input-container">
+          <TextArea
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="Ask me anything about your calendar..."
+            autoSize={{ minRows: 1, maxRows: 4 }}
+            className="chat-input"
+            onPressEnter={(e) => {
+              if (!e.shiftKey) {
+                e.preventDefault();
+                handleSend();
+              }
+            }}
+          />
+          <Button
+            type="primary"
+            icon={<SendOutlined />}
+            onClick={handleSend}
+            loading={loading}
+            className="send-btn"
+          />
         </div>
+      </div>
     </SidebarLayout>
   );
 }

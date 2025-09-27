@@ -17,10 +17,10 @@ import ConversationService from "../data/conversationService";
 import "../styles/setting.scss";
 import INTEGRATION_ID from "../constant/integration.constant";
 import integration from "../service/integration";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { INTEGRATION_MESSAGE } from "../constant/api.constant";
-import { useQuery } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
+import userAuthentication from "../service/userAuthentication";
 
 const { Text } = Typography;
 
@@ -33,6 +33,7 @@ export default function Settings() {
   const [searchQuery, setSearchQuery] = useState("");
   const conversationHistory = ConversationService.getConversationHistory(currentChatId);
   const userInfo = ConversationService.getUserInfo();
+  const { data: me } = useQuery({ queryKey: ["me"], queryFn: userAuthentication.getMe });
   
   // Fetch configured integrations
   const {data: configuredIntegrations, isPending: gettingConfiguredIntegrations} = useQuery({
@@ -171,7 +172,7 @@ export default function Settings() {
               <div>
                 <Text strong>Email:</Text>
                 <br />
-                <Text>{userInfo.email}</Text>
+                <Text>{me?.email || userInfo.email}</Text>
               </div>
             </Flex>
           </Space>

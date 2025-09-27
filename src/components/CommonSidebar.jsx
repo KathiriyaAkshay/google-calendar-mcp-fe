@@ -94,7 +94,7 @@ const CommonSidebar = ({
       onClick: toggleSidebar,
     },
     {
-      icon: <CalendarOutlined />,
+      icon: <CalendarOutlined style={{ color: "var(--primary-color)" }} />,
       tooltip: "Recent Chats",
       onClick: toggleSidebar,
     },
@@ -125,9 +125,13 @@ const CommonSidebar = ({
             type="text"
             icon={
               isCollapsed ? (
-                <MenuUnfoldOutlined />
+                <MenuUnfoldOutlined style={{
+                  color: "var(--black-color)"
+                }} />
               ) : (
-                <MenuFoldOutlined />
+                <MenuFoldOutlined  style={{
+                  color: "var(--black-color)"
+                }}/>
               )
             }
             onClick={toggleSidebar}

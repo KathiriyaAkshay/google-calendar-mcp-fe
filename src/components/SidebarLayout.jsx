@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Avatar, Typography } from "antd";
 import CommonSidebar from "./CommonSidebar";
 import ConversationService from "../data/conversationService";
+import { useQuery } from "@tanstack/react-query";
+import userAuthentication from "../service/userAuthentication";
 
 const { Text } = Typography;
 
@@ -19,8 +21,12 @@ const SidebarLayout = ({
   children,
   containerStyle,
 }) => {
-  const userInfo = ConversationService.getUserInfo();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const { data: me } = useQuery({ queryKey: ["me"], queryFn: userAuthentication.getMe });
+  const fallbackUser = ConversationService.getUserInfo();
+  const email = me?.data?.email || fallbackUser?.email || "";
+  const displayName = email ? email.split("@")[0] : fallbackUser?.name || "";
+  const avatarInitial = displayName ? displayName[0]?.toUpperCase() : (email[0]?.toUpperCase() || fallbackUser?.avatar || "");
 
   return (
     <div className="dashboard-container" style={containerStyle}>
@@ -45,11 +51,10 @@ const SidebarLayout = ({
       <div className="dashboard-main">
         <div className="chat-header">
           <div className="user-info">
-            <Avatar size={24} style={{ backgroundColor: userInfo.avatarColor }}>
-              {userInfo.avatar}
+            <Avatar size={24}>
+              {avatarInitial}
             </Avatar>
-            <Text className="username">{userInfo.name}</Text>
-            <Text className="email">{userInfo.email}</Text>
+            <Text className="email user-info-email">{email}</Text>
           </div>
         </div>
 
