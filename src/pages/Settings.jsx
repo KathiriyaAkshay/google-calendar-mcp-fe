@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   Typography,
   Card,
-  Button,
   Space,
   message,
   Avatar,
@@ -194,13 +193,25 @@ export default function Settings() {
               </div>
               <div className="settings-intergation-option-actions">
                 {checkIntegrationIsConfigured(integration.id) ? (
-                  <Button danger icon={<DisconnectOutlined />} onClick={() => handleDisconnect(integration.id)}>
+                  <div
+                    className="integration-action disconnect-action"
+                    onClick={() => handleDisconnect(integration.id)}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <DisconnectOutlined style={{ marginRight: 8 }} />
                     Disconnect
-                  </Button>
+                  </div>
                 ) : (
-                  <Button type="primary" icon={<GoogleOutlined />} onClick={() => handleConnect(integration.id)}>
+                  <div
+                    className="integration-action connect-action"
+                    onClick={() => handleConnect(integration.id)}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <GoogleOutlined style={{ marginRight: 8 }} />
                     Connect
-                  </Button>
+                  </div>
                 )}
               </div>
             </Flex>

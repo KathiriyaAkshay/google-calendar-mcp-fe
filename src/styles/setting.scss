@@ -60,6 +60,50 @@
     
         .settings-intergation-option-actions{
             margin-left: auto;
+            margin-top: auto;
+            margin-bottom: auto;
+            
+            .integration-action{
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                height: 35px;
+                padding: 0 16px;
+                border-radius: 5px;
+                font-weight: var(--font-weight-semibold);
+                cursor: pointer;
+                user-select: none;
+                border: 1px solid transparent;
+                transition: background-color .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .05s ease;
+            }
+
+            .integration-action:focus{
+                outline: none;
+                box-shadow: 0 0 0 2px rgba(47, 128, 237, 0.2);
+            }
+
+            .integration-action:active{
+                transform: translateY(1px);
+            }
+
+            .connect-action{
+                background: var(--primary-color);
+                color: var(--fixed-white-color);
+            }
+
+            .connect-action:hover{
+                background: var(--auth-primary-hover);
+            }
+
+            .disconnect-action{
+                background: transparent;
+                color: var(--auth-error-color);
+                border-color: var(--auth-error-color);
+            }
+
+            .disconnect-action:hover{
+                background: rgba(220, 53, 69, 0.08);
+            }
         }
     }
 }
