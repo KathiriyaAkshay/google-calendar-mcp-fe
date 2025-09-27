@@ -33,7 +33,7 @@ import {
   SearchOutlined,
   MessageOutlined,
 } from "@ant-design/icons";
-import CommonSidebar from "../components/CommonSidebar";
+import SidebarLayout from "../components/SidebarLayout";
 import { useTheme } from "../contexts/ThemeContext";
 import ConversationService from "../data/conversationService";
 
@@ -183,33 +183,19 @@ export default function Personal() {
   ];
 
   return (
-    <div className="dashboard-container" data-theme={theme} style={{ height: "100vh", overflow: "hidden" }}>
-      <CommonSidebar
-        title={appConfig.title}
-        conversationHistory={conversationHistory}
-        onNewConversation={handleNewConversation}
-        onConversationClick={handleConversationClick}
-        currentChatId={currentChatId}
-        searchQuery={searchQuery}
-        onSearchChange={handleSearchChange}
-        onClearSearch={clearSearch}
-        customActions={customActions}
-        collapsed={sidebarCollapsed}
-        onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
-      />
-
-      <div className="dashboard-main">
-        <div className="chat-header">
-          <div className="user-info">
-            <Avatar size={24} style={{ backgroundColor: userInfo.avatarColor }}>
-              {userInfo.avatar}
-            </Avatar>
-            <Text className="username">{userInfo.name}</Text>
-            <Text className="email">{userInfo.email}</Text>
-          </div>
-        </div>
-
-        <div className="personal-page-content">
+    <SidebarLayout
+      title={appConfig.title}
+      conversationHistory={conversationHistory}
+      onNewConversation={handleNewConversation}
+      onConversationClick={handleConversationClick}
+      currentChatId={currentChatId}
+      searchQuery={searchQuery}
+      onSearchChange={handleSearchChange}
+      onClearSearch={clearSearch}
+      customActions={customActions}
+      containerStyle={{ height: "100vh", overflow: "hidden" }}
+    >
+      <div className="personal-page-content">
           {/* Hero Section */}
           <div className="personal-hero-section">
             <div className="hero-background"></div>
@@ -613,8 +599,7 @@ export default function Personal() {
                 </Form.Item>
               </Form>
             </Modal>
-          </div>
-        </div>
       </div>
+    </SidebarLayout>
   );
 }

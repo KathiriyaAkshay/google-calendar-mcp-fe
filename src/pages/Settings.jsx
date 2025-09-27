@@ -26,12 +26,18 @@ import {
   ExportOutlined,
   ImportOutlined,
 } from "@ant-design/icons";
-import DashboardLayout from "../components/DashboardLayout";
+import SidebarLayout from "../components/SidebarLayout";
+import ConversationService from "../data/conversationService";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
 
 export default function Settings() {
+  const appConfig = ConversationService.getAppConfig();
+  const [currentChatId, setCurrentChatId] = useState(appConfig.defaultChatId);
+  const [searchQuery, setSearchQuery] = useState("");
+  const conversationHistory = ConversationService.getConversationHistory(currentChatId);
+
   const [settings, setSettings] = useState({
     notifications: {
       email: true,
@@ -121,9 +127,18 @@ export default function Settings() {
   ];
 
   return (
-    <DashboardLayout
-      title="Google Calendar MCP"
-      showConversations={false}
+    <SidebarLayout
+      title={appConfig.title}
+      conversationHistory={conversationHistory}
+      onNewConversation={() => {
+        const { newChatId } = ConversationService.createNewConversation(ConversationService.getAllConversations());
+        setCurrentChatId(newChatId);
+      }}
+      onConversationClick={(chatId) => setCurrentChatId(chatId)}
+      currentChatId={currentChatId}
+      searchQuery={searchQuery}
+      onSearchChange={(e) => setSearchQuery(e.target.value)}
+      onClearSearch={() => setSearchQuery("")}
       customActions={customActions}
     >
       <div className="content-header">
@@ -562,6 +577,6 @@ export default function Settings() {
           </Space>
         </Card>
       </div>
-    </DashboardLayout>
+    </SidebarLayout>
   );
 }

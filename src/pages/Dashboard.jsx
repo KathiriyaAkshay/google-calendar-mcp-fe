@@ -15,7 +15,7 @@ import {
   MessageOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import CommonSidebar from "../components/CommonSidebar";
+import SidebarLayout from "../components/SidebarLayout";
 import { useTheme } from "../contexts/ThemeContext";
 import ConversationService from "../data/conversationService";
 
@@ -47,7 +47,6 @@ export default function Dashboard() {
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false);
   const { theme } = useTheme();
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const userInfo = ConversationService.getUserInfo();
 
@@ -105,7 +104,7 @@ export default function Dashboard() {
     setSearchQuery("");
   };
 
-  const customActions = [
+  const getCustomActions = (toggleSidebar) => [
     {
       icon: <PlusOutlined />,
       tooltip: "New Conversation",
@@ -114,12 +113,12 @@ export default function Dashboard() {
     {
       icon: <SearchOutlined />,
       tooltip: "Search",
-      onClick: () => setSidebarCollapsed(!sidebarCollapsed),
+      onClick: toggleSidebar,
     },
     {
       icon: <MessageOutlined />,
       tooltip: "Recent Chats",
-      onClick: () => setSidebarCollapsed(!sidebarCollapsed),
+      onClick: toggleSidebar,
     },
     {
       icon: <SettingOutlined />,
@@ -129,37 +128,18 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="dashboard-container" data-theme={theme}>
-
-      {/* Common sidebar component  */}
-      <CommonSidebar
-        title={appConfig.title}
-        conversationHistory={conversationHistory}
-        onNewConversation={handleNewConversation}
-        onConversationClick={handleConversationClick}
-        currentChatId={currentChatId}
-        searchQuery={searchQuery}
-        onSearchChange={handleSearchChange}
-        onClearSearch={clearSearch}
-        customActions={customActions}
-        collapsed={sidebarCollapsed}
-        onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
-      />
-
-      {/* Dashboard main component  */}
-      <div className="dashboard-main">
-        <div className="chat-header">
-          <div className="user-info">
-            <Avatar size={24} style={{ backgroundColor: userInfo.avatarColor }}>
-              {userInfo.avatar}
-            </Avatar>
-            <Text className="username">{userInfo.name}</Text>
-            <Text className="email">{userInfo.email}</Text>
-          </div>
-        </div>
-
-        <div className="main-content">
-          <div className="chat-messages">
+    <SidebarLayout
+      title={appConfig.title}
+      conversationHistory={conversationHistory}
+      onNewConversation={handleNewConversation}
+      onConversationClick={handleConversationClick}
+      currentChatId={currentChatId}
+      searchQuery={searchQuery}
+      onSearchChange={handleSearchChange}
+      onClearSearch={clearSearch}
+      getCustomActions={getCustomActions}
+    >
+      <div className="chat-messages">
             {messages.map((message) => (
               <div key={message.id} className={`message ${message.type}`}>
                 {message.type === "assistant" && (
@@ -213,35 +193,32 @@ export default function Dashboard() {
                 </div>
               </div>
             )}
-          </div>
+        </div>
 
-          <div className="chat-input-section">
-            <div className="input-container">
-              <TextArea
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Ask me anything about your calendar..."
-                autoSize={{ minRows: 1, maxRows: 4 }}
-                className="chat-input"
-                onPressEnter={(e) => {
-                  if (!e.shiftKey) {
-                    e.preventDefault();
-                    handleSend();
-                  }
-                }}
-              />
-              <Button
-                type="primary"
-                icon={<SendOutlined />}
-                onClick={handleSend}
-                loading={loading}
-                className="send-btn"
-              />
-            </div>
+        <div className="chat-input-section">
+          <div className="input-container">
+            <TextArea
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              placeholder="Ask me anything about your calendar..."
+              autoSize={{ minRows: 1, maxRows: 4 }}
+              className="chat-input"
+              onPressEnter={(e) => {
+                if (!e.shiftKey) {
+                  e.preventDefault();
+                  handleSend();
+                }
+              }}
+            />
+            <Button
+              type="primary"
+              icon={<SendOutlined />}
+              onClick={handleSend}
+              loading={loading}
+              className="send-btn"
+            />
           </div>
         </div>
-      </div>
-      
-    </div>
+    </SidebarLayout>
   );
 }

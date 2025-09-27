@@ -26,7 +26,7 @@ import {
   PlusOutlined,
   MessageOutlined,
 } from "@ant-design/icons";
-import CommonSidebar from "../components/CommonSidebar";
+import SidebarLayout from "../components/SidebarLayout";
 import { useTheme } from "../contexts/ThemeContext";
 import ConversationService from "../data/conversationService";
 import { GoogleAuthProvider, linkWithPopup } from "firebase/auth";
@@ -251,7 +251,6 @@ export default function Integrations() {
   ];
 
   const { theme } = useTheme();
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const customActions = [
     {
@@ -262,12 +261,12 @@ export default function Integrations() {
     {
       icon: <SearchOutlined />,
       tooltip: "Search",
-      onClick: () => setSidebarCollapsed(!sidebarCollapsed),
+      onClick: () => {},
     },
     {
       icon: <MessageOutlined />,
       tooltip: "Recent Chats",
-      onClick: () => setSidebarCollapsed(!sidebarCollapsed),
+      onClick: () => {},
     },
     {
       icon: <SettingOutlined />,
@@ -309,33 +308,18 @@ export default function Integrations() {
   }
 
   return (
-    <div className="dashboard-container" data-theme={theme}>
-      <CommonSidebar
-        title={appConfig.title}
-        conversationHistory={conversationHistory}
-        onNewConversation={handleNewConversation}
-        onConversationClick={handleConversationClick}
-        currentChatId={currentChatId}
-        searchQuery={searchQuery}
-        onSearchChange={handleSearchChange}
-        onClearSearch={clearSearch}
-        customActions={customActions}
-        collapsed={sidebarCollapsed}
-        onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
-      />
-
-      <div className="dashboard-main">
-        <div className="chat-header">
-          <div className="user-info">
-            <Avatar size={24} style={{ backgroundColor: userInfo.avatarColor }}>
-              {userInfo.avatar}
-            </Avatar>
-            <Text className="username">{userInfo.name}</Text>
-            <Text className="email">{userInfo.email}</Text>
-          </div>
-        </div>
-
-        <div className="integration-content">
+    <SidebarLayout
+      title={appConfig.title}
+      conversationHistory={conversationHistory}
+      onNewConversation={handleNewConversation}
+      onConversationClick={handleConversationClick}
+      currentChatId={currentChatId}
+      searchQuery={searchQuery}
+      onSearchChange={handleSearchChange}
+      onClearSearch={clearSearch}
+      customActions={customActions}
+    >
+      <div className="integration-content">
           <div className="content-header">
             <div
               style={{
@@ -373,8 +357,7 @@ export default function Integrations() {
               }
             />
           </Card>
-        </div>
       </div>
-    </div>
+    </SidebarLayout>
   );
 }
