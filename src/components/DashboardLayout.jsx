@@ -111,12 +111,7 @@ const DashboardLayout = ({
       icon: <MessageOutlined />,
       tooltip: "Recent Chats",
       onClick: toggleSidebar,
-    },
-    {
-      icon: <SettingOutlined />,
-      tooltip: "Settings",
-      onClick: () => {},
-    },
+    }
   ];
 
   const actions = customActions.length > 0 ? customActions : defaultActions;

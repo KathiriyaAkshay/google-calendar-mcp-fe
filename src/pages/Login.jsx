@@ -15,7 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 import SubmitBtn from "../components/SubmitBtn";
 import GoogleSignIn from "../components/GoogleSignIn";
 import { useTheme } from "../contexts/ThemeContext";
-import userAuthentication from "../service/userAuthentication";
+import userAuthentication from "../service/userauthentication";
 import { useMutation } from "@tanstack/react-query";
 import { USER_AUTHENTICATION_MESSAGE } from "../constant/api.constant";
 import { auth, provider, signInWithPopup } from "../config/firebaseconfig";
@@ -72,6 +72,7 @@ export default function Login() {
       }
       setIsLoginLoading(false);
     } catch (error) {
+      console.log(error);
       message.error(error?.message || USER_AUTHENTICATION_MESSAGE.COMMON_ERROR_MESSAGE);
     } finally {
       setIsLoginLoading(false);

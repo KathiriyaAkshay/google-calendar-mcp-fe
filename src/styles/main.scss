@@ -725,7 +725,7 @@ input[type="password"],
   font-weight: 600 !important;
   font-size: var(--font-size-md)!important;
   border: none !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: none !important;
   position: relative;
   overflow: hidden;
   letter-spacing: 0.2px;
@@ -877,6 +877,22 @@ input[type="password"],
 
   &:hover {
     color: var(--auth-primary-color) !important;
+  }
+}
+
+.try-again-btn {
+  color: var(--auth-primary-color);
+  cursor: pointer;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  display: inline-block;
+  margin-top: 8px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--auth-primary-hover);
+    text-decoration: underline;
   }
 }
 

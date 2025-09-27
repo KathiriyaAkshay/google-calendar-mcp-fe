@@ -7,4 +7,10 @@ export let USER_AUTHENTICATION_MESSAGE = {
     PASSWORD_RESET_SUCCESSFULLY : "Password reset successfully! You can now login with your new password.",
     VERIFICATION_EMAIL_SENT : "Verification email sent to your registered email.",
     USER_ALREADY_EXISTS : "User already exists. Please login.",
+    USER_REGISTERED_WITH_GOOGLE : "User registered with google. Please login with google.",
+    USER_NOT_FOUND : "User not found. Please register first.",
+}
+
+export let INTEGRATION_MESSAGE = {
+    COMMON_ERROR_MESSAGE : "Something went wrong. Please try again.",
 }

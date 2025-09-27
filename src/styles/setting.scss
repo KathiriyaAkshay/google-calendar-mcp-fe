@@ -1,0 +1,65 @@
+.user-profile-content-section{
+    padding-top: 14px ;
+    padding-left: 14px;
+    padding-right: 14px;
+    
+    .settings-content-section{
+        border-color: var(--bs-border-color) !important;
+        .ant-card-head-title{
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            color: var(--black-color) !important;
+        }
+    
+        .ant-space-item{
+            margin-top: auto !important;
+            margin-bottom: auto !important;
+        }
+
+        .ant-card-head{
+            border-bottom: 1px solid var(--bs-border-color) !important;
+        }
+    }
+    
+    .settings-integration-section{
+        margin-top: 20px;
+        border-color: var(--bs-border-color) !important;
+        .ant-card-head-title{
+            font-size: var(--font-size-lg) !important;
+            font-weight: 600 !important;
+            color: var(--black-color) !important;
+        }
+
+        .ant-card-head{
+            border-bottom: 1px solid var(--bs-border-color) !important;
+        }
+    }
+    
+    .settings-integration-option{
+        .settings-intergation-option-image{
+            height: 40px;
+            width: 40px;
+            border-radius: var(--border-radius-md);
+            margin-top: auto; 
+            margin-bottom: auto;
+        }
+    
+        .settings-intergation-option-content{
+            margin-left: 15px;
+            margin-top: auto;
+            margin-bottom: auto;
+    
+            .settings-intergation-option-content-title{
+                font-size: var(--font-size-base) !important;
+            }
+    
+            .settings-intergation-option-content-description{
+                font-size: var(--font-size-md) !important;
+            }
+        }
+    
+        .settings-intergation-option-actions{
+            margin-left: auto;
+        }
+    }
+}

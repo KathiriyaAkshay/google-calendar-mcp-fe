@@ -30,24 +30,12 @@ const userAuthentication = {
         return await apiClient.post(USER_AUTHENTICATION_ROUTE.USER_SIGNUP_ROUTE, userData);
     },
 
-    verifyEmail: async (data) => {
-        return await apiClient.post(USER_AUTHENTICATION_ROUTE.VERIFY_EMAIL, data);
-    },
-
-    forgetPasword: async (data) => {
-        return await apiClient.post(USER_AUTHENTICATION_ROUTE.PASSWORD_RESET, data);
-    }, 
-
-    setNewPassword: async (data) => {
-        return await apiClient.post(USER_AUTHENTICATION_ROUTE.PASSWORD_CHANGE, data);
-    }, 
-
-    googleAuthRedirectURL: async () => {
-        return await apiClient.get(USER_AUTHENTICATION_ROUTE.GOOGLE_AUTH_REDIRECT_URL);
-    },
-
     getMe: async () => {
         return await apiClient.get(USER_AUTHENTICATION_ROUTE.USER_ME);
+    }, 
+
+    forgetPasswordEmailCheck: async (email) => {
+        return await apiClient.post(USER_AUTHENTICATION_ROUTE.PASSWORD_FORGOT_EMAIL_CHECK, { email });
     }
 
 };

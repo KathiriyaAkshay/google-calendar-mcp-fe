@@ -6,27 +6,47 @@ import { useTheme } from "../contexts/ThemeContext";
 import { useMutation } from "@tanstack/react-query";
 import userAuthentication from "../service/userAuthentication";
 import { USER_AUTHENTICATION_MESSAGE } from "../constant/api.constant";
+import { sendPasswordResetEmail } from "firebase/auth" 
+import { auth } from "../config/firebaseconfig";
 
 const { Title, Text } = Typography;
 
 function ForgotPassword() {
-  const [emailSent, setEmailSent] = useState(true);
   const navigate = useNavigate();
+  const [emailSent, setEmailSent] = useState(false);
+  const [loading, setLoading] = useState(false) ; 
   const { theme } = useTheme();
 
-  const { mutate, isPending: loading } = useMutation({
-    mutationFn: (values) => userAuthentication.forgetPasword(values),
-    onSuccess: (response) => {
-      message.success(USER_AUTHENTICATION_MESSAGE.PASSWORD_FORGOT_SUCCESSFULLY);
-      setEmailSent(true);
-    },
+  // Check user email is resgister or not 
+  const { mutateAsync: checkUserEmail, isPending: checkingEmail } = useMutation({
+    mutationFn: (email) => userAuthentication.forgetPasswordEmailCheck(email),
     onError: (error) => {
       message.error(error?.message || USER_AUTHENTICATION_MESSAGE.COMMON_ERROR_MESSAGE);
     },
   });
 
-  const onFinish = (values) => {
-    mutate(values);
+
+  const onFinish = async (values) => {
+    try {
+      setLoading(true);
+      let userEmail = await checkUserEmail(values.email);
+      userEmail = userEmail.data;
+      if (userEmail?.exists){
+        if (userEmail?.is_google_signup){
+          message.error(USER_AUTHENTICATION_MESSAGE.USER_REGISTERED_WITH_GOOGLE);
+        } else {
+          await sendPasswordResetEmail(auth, values.email);
+          message.success(USER_AUTHENTICATION_MESSAGE.PASSWORD_FORGOT_SUCCESSFULLY);
+          setEmailSent(true);
+        }
+      } else {
+        message.error(USER_AUTHENTICATION_MESSAGE.USER_NOT_FOUND);
+      }
+    } catch (error) {
+      message.error(error?.message || USER_AUTHENTICATION_MESSAGE.COMMON_ERROR_MESSAGE);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (emailSent) {
