@@ -44,6 +44,10 @@ const userAuthentication = {
 
     googleAuthRedirectURL: async () => {
         return await apiClient.get(USER_AUTHENTICATION_ROUTE.GOOGLE_AUTH_REDIRECT_URL);
+    },
+
+    getMe: async () => {
+        return await apiClient.get(USER_AUTHENTICATION_ROUTE.USER_ME);
     }
 
 };

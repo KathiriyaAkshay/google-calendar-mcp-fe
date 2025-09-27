@@ -7,4 +7,5 @@ export let USER_AUTHENTICATION_ROUTE = {
     VERIFY_EMAIL: "/user/verify-email",
     GOOGLE_AUTH_REDIRECT_URL: "/user/google-signup-redirect-url",
     CHECK_USER_EMAIL: "/user/check-email",
+    USER_ME: "/user/me",
 }

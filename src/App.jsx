@@ -14,6 +14,8 @@ import Settings from './pages/Settings'
 import Integrations from './pages/Integrations'
 import Personal from './pages/Personal'
 import queryClient from './service/queryClient'
+import ProtectedRoute from './components/ProtectedRoute'
+import { appRoutes } from './routes'
 
 const { Content } = Layout
 
@@ -28,33 +30,17 @@ export default function App() {
           </div>
           <Content>
           <Routes>
-            {/* Homepage  */}
-            <Route path="/" element={<Dashboard />} />
-            
-            {/* Login page route */}
-            <Route path="/login" element={<Login />} />
-            
-            {/* Signup page route  */}
-            <Route path="/signup" element={<Signup />} />
-            
-            {/* Forgetpassword related route  */}
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            
-            {/* Password configuration route */}
-            <Route path="/password-config" element={<PasswordConfig />} />
-            
-            {/* Password reset route */}
-            <Route path="/reset-password" element={<ResetPassword />} />
-            
-            
-            {/* Setting related page  */}
-            <Route path="/settings" element={<Settings />} />
-            
-            {/* Integration related page  */}
-            <Route path="/integrations" element={<Integrations />} />
-            
-            {/* Personal information related page  */}
-            <Route path="/personal" element={<Personal />} />
+            {appRoutes.map(({ path, element, protected: isProtected }) => (
+              <Route
+                key={path}
+                path={path}
+                element={isProtected ? (
+                  <ProtectedRoute>{element}</ProtectedRoute>
+                ) : (
+                  element
+                )}
+              />
+            ))}
           </Routes>
         </Content>
       </Layout>

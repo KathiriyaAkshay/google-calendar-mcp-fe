@@ -22,6 +22,7 @@ export default function Signup() {
     mutationFn: (values) => userAuthentication.register(values),
     onSuccess: (response, variables) => {
       if (variables.is_google_signup) {
+        localStorage.setItem('auth_token', response.data.access_token);
         message.success(USER_AUTHENTICATION_MESSAGE.SIGNUP_SUCCESSFULLY);
         navigate(PAGE_ROUTE.HOME_ROUTE);
       }
