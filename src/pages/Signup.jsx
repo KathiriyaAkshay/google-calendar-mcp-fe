@@ -7,46 +7,80 @@ import { useTheme } from '../contexts/ThemeContext';
 import userAuthentication from "../service/userAuthentication";
 import { useMutation } from "@tanstack/react-query";
 import { USER_AUTHENTICATION_MESSAGE } from "../constant/api.constant";
+import  PAGE_ROUTE  from "../constant/page.constant";
 import { auth, provider, signInWithPopup } from "../config/firebaseconfig";
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 const { Title, Text } = Typography;
 
 export default function Signup() {
   const navigate = useNavigate();
+  const [isSignUpLoading, setIsSignUpLoading] = useState(false);
   const { theme } = useTheme();
 
-  const { mutate, isPending: loading } = useMutation({
+  // Register user mutation
+  const { mutateAsync: registerUser, isPending: loading } = useMutation({
     mutationFn: (values) => userAuthentication.register(values),
+    onSuccess: (response, variables) => {
+      if (variables.is_google_signup) {
+        message.success(USER_AUTHENTICATION_MESSAGE.SIGNUP_SUCCESSFULLY);
+        navigate(PAGE_ROUTE.HOME_ROUTE);
+      }
+    },
+    onError: (error) => {
+      message.error(error?.message || USER_AUTHENTICATION_MESSAGE.COMMON_ERROR_MESSAGE);
+    },
+  });
+  
+
+  // Check User email 
+  const { mutateAsync: checkUserEmail, isPending: checkingEmail } = useMutation({
+    mutationFn: (email) => userAuthentication.checkUserEmail(email),
     onSuccess: (response) => {
-      message.success(USER_AUTHENTICATION_MESSAGE.SIGNUP_SUCCESSFULLY);
+      console.log(response);
+      return response;
     },
     onError: (error) => {
       message.error(error?.message || USER_AUTHENTICATION_MESSAGE.COMMON_ERROR_MESSAGE);
     },
   });
 
-  const onFinish = (values) => {
-    let email = values.email;
-    let password = values.password;
-
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        sendEmailVerification(userCredential.user);
+  // Signup with email and password related functionality handler
+  const onSignupFinish = async (values) => {
+    try {
+      // Check user email 
+      const userEmail = await checkUserEmail(values.email);
+      if (userEmail.data.exists) {
+        message.error(USER_AUTHENTICATION_MESSAGE.USER_ALREADY_EXISTS);
+        return;
+      } else {
+        setIsSignUpLoading(true) ; 
+        const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
+        await registerUser({
+          email: values.email
+        });
+        setIsSignUpLoading(false) ; 
         message.success(USER_AUTHENTICATION_MESSAGE.VERIFICATION_EMAIL_SENT);
-      })
-      .catch((error) => {
-        message.error(error?.message || USER_AUTHENTICATION_MESSAGE.COMMON_ERROR_MESSAGE);
-      });
-    
+      }
+    } catch (error) {
+      message.error(error?.message || USER_AUTHENTICATION_MESSAGE.COMMON_ERROR_MESSAGE);
+    } finally {
+      setIsSignUpLoading(false) ; 
+    }
   };
 
-  // Signup With google related functionality 
+  // Signup with google related functionality handler 
   const SignupWithGoogle = async () => {
     const result = await signInWithPopup(auth, provider);
     
     // Reterive email, token related information 
     const email = result.user.email ; 
-    const token = result.user.accessToken ; 
+
+    // Register this user in database
+    await registerUser({
+      email: email,
+      is_google_signup: true
+    });
+    
   }
 
   return (
@@ -82,7 +116,7 @@ export default function Signup() {
               <Text className="form-subtitle">Start your finance management journey today.</Text>
             </div>
 
-            <Form layout="vertical" onFinish={onFinish} className="auth-form">
+            <Form layout="vertical" className="auth-form" onFinish={onSignupFinish}>
 
               <Form.Item
                 name="email"
@@ -101,7 +135,7 @@ export default function Signup() {
               </Form.Item>
 
               <Form.Item>
-                <SubmitBtn label="Create Account" isLoading={loading} htmlType="submit" />
+                <SubmitBtn label="Create Account" isLoading={isSignUpLoading} htmlType="submit" />
               </Form.Item>
 
               <Divider className="authentication-divider-section">OR</Divider>

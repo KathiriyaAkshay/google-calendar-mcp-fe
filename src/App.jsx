@@ -28,8 +28,9 @@ export default function App() {
           </div>
           <Content>
           <Routes>
-            <Route path="/" element={<Login />} />
-
+            {/* Homepage  */}
+            <Route path="/" element={<Dashboard />} />
+            
             {/* Login page route */}
             <Route path="/login" element={<Login />} />
             
@@ -45,8 +46,6 @@ export default function App() {
             {/* Password reset route */}
             <Route path="/reset-password" element={<ResetPassword />} />
             
-            {/* Homepage  */}
-            <Route path="/home" element={<Dashboard />} />
             
             {/* Setting related page  */}
             <Route path="/settings" element={<Settings />} />

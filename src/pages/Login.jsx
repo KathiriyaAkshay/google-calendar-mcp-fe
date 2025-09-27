@@ -19,7 +19,7 @@ import userAuthentication from "../service/userAuthentication";
 import { useMutation } from "@tanstack/react-query";
 import { USER_AUTHENTICATION_MESSAGE } from "../constant/api.constant";
 import { auth, provider, signInWithPopup } from "../config/firebaseconfig";
-
+import PAGE_ROUTE from "../constant/page.constant";
 
 const { Title, Text } = Typography;
 
@@ -27,10 +27,12 @@ export default function Login() {
   const navigate = useNavigate();
   const { theme } = useTheme();
 
-  const { mutate, isPending: loading } = useMutation({
+  const { mutate: userLogin, isPending: loading } = useMutation({
     mutationFn: (values) => userAuthentication.login(values),
     onSuccess: (response) => {
       message.success(USER_AUTHENTICATION_MESSAGE.USER_LOGIN_SUCCESSFULLY);
+      localStorage.setItem('auth_token', response.data.access_token);
+      navigate(PAGE_ROUTE.HOME_ROUTE);
     },
     onError: (error) => {
       message.error(error?.message || USER_AUTHENTICATION_MESSAGE.COMMON_ERROR_MESSAGE);
@@ -38,7 +40,7 @@ export default function Login() {
   });
 
   const onFinish = async (values) => {
-    mutate(values);
+    userLogin(values);
   };
 
   // Google signin related functionality 
@@ -47,7 +49,12 @@ export default function Login() {
     
     // Reterive email, token related information 
     const email = result.user.email ; 
-    const token = result.user.accessToken ; 
+
+    userLogin({
+      email: email,
+      is_google_signup: true
+    });
+    
   }
 
   return (
@@ -131,8 +138,7 @@ export default function Login() {
               <Form.Item className="google-sign-in">
                 <GoogleSignIn
                   text="Sign in with Google"
-                  onSuccess={googleAuthRedirectURL}
-                  loading={googleAuthRedirectURLLoading}
+                  onSuccess={LoginWithGoogle}
                 />
               </Form.Item>
 

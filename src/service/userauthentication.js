@@ -21,6 +21,10 @@ const userAuthentication = {
             throw error;
         }
     },
+
+    checkUserEmail: async (email) => {
+        return await apiClient.post(USER_AUTHENTICATION_ROUTE.CHECK_USER_EMAIL, { email });
+    }, 
     
     register: async (userData) => {
         return await apiClient.post(USER_AUTHENTICATION_ROUTE.USER_SIGNUP_ROUTE, userData);

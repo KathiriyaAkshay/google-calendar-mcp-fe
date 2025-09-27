@@ -1,4 +1,4 @@
-export let PAGE_ROUET = {
+let PAGE_ROUTE = {
     LOGIN_ROUTE : "/login",
     SIGNUP_ROUTE : "/signup",
     FORGOT_PASSWORD_ROUTE : "/forgot-password",
@@ -6,4 +6,7 @@ export let PAGE_ROUET = {
     SETTINGS_ROUTE : "/settings",
     INTEGRATIONS_ROUTE : "/integrations",
     PERSONAL_ROUTE : "/personal",
+    HOME_ROUTE : "/",
 }
+
+export default PAGE_ROUTE;

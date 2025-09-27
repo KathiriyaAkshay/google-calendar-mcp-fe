@@ -29,9 +29,16 @@ import {
 import CommonSidebar from "../components/CommonSidebar";
 import { useTheme } from "../contexts/ThemeContext";
 import ConversationService from "../data/conversationService";
+import { GoogleAuthProvider, linkWithPopup } from "firebase/auth";
+import { auth } from "../config/firebaseconfig";
 
-const { Title, Text } = Typography;
-const { Search } = Input;
+const { Text } = Typography;
+
+const provider = new GoogleAuthProvider();
+provider.addScope("https://www.googleapis.com/auth/calendar.readonly");
+provider.addScope("https://www.googleapis.com/auth/calendar.events");
+provider.addScope("https://www.googleapis.com/auth/calendar.events.readonly");
+
 
 export default function Integrations() {
   const navigate = useNavigate();
@@ -39,24 +46,24 @@ export default function Integrations() {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentChatId, setCurrentChatId] = useState(appConfig.defaultChatId);
   const [chats, setChats] = useState(ConversationService.getAllConversations());
-
+  
   const userInfo = ConversationService.getUserInfo();
   
   // Google Calendar related integrations data
-  const integrations = [
+  const [integrations, setIntegrations] = useState([
     {
       id: "google-calendar",
       name: "Google Calendar",
       description: "Meeting & Schedule data",
       icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg",
-      status: "connected",
+      status: localStorage.getItem('googleCalendarToken') ? "connected" : "disconnected",
       category: "calendar",
       permissions: ["Read calendar events", "Create events", "Update events"],
-      connectedDate: "2025-09-10",
-      lastSync: "2 minutes ago",
-      events: 156,
+      connectedDate: localStorage.getItem('googleCalendarToken') ? "2025-09-10" : null,
+      lastSync: localStorage.getItem('googleCalendarToken') ? "2 minutes ago" : null,
+      events: localStorage.getItem('googleCalendarToken') ? 156 : 0,
     }
-  ];
+  ]);
 
   const conversationHistory = ConversationService.getConversationHistory(currentChatId);
 
@@ -72,16 +79,40 @@ export default function Integrations() {
     message.success("New conversation started!");
   };
 
-  const handleConnect = (integrationId) => {
-    message.success(
-      `Connected to ${integrations.find((i) => i.id === integrationId)?.name}!`
-    );
+  const handleConnect = async (integrationId) => {
+    if (integrationId === "google-calendar") {
+      await ConnectWithGoogleCalendar();
+    } else {
+      message.success(
+        `Connected to ${integrations.find((i) => i.id === integrationId)?.name}!`
+      );
+    }
   };
 
   const handleDisconnect = (integrationId) => {
+    if (integrationId === "google-calendar") {
+      // Remove the token from localStorage
+      localStorage.removeItem('googleCalendarToken');
+      
+      // Update the UI
+      const updatedIntegrations = integrations.map(item => {
+        if (item.id === 'google-calendar') {
+          return { 
+            ...item, 
+            status: 'disconnected', 
+            connectedDate: null,
+            lastSync: null,
+            events: 0
+          };
+        }
+        return item;
+      });
+      
+      setIntegrations(updatedIntegrations);
+    }
+    
     message.warning(
-      `Disconnected from ${integrations.find((i) => i.id === integrationId)?.name
-      }`
+      `Disconnected from ${integrations.find((i) => i.id === integrationId)?.name}`
     );
   };
 
@@ -175,20 +206,35 @@ export default function Integrations() {
       render: (_, record) => (
         <Space>
           {record.status === "connected" ? (
-            <Button
-              type="text"
-              icon={<SettingOutlined />}
-              style={{
-                color: "#ff6b6b",
-                border: "1px solid #ff6b6b20",
-                borderRadius: 8,
-              }}
-              onClick={() => handleConfigure(record.id)}
-            />
+            <Space>
+              <Button
+                type="text"
+                icon={<SettingOutlined />}
+                style={{
+                  color: "#ff6b6b",
+                  border: "1px solid #ff6b6b20",
+                  borderRadius: 8,
+                }}
+                onClick={() => handleConfigure(record.id)}
+              />
+              <Button
+                danger
+                type="text"
+                icon={<DisconnectOutlined />}
+                style={{
+                  border: "1px solid #ff6b6b20",
+                  borderRadius: 8,
+                }}
+                onClick={() => handleDisconnect(record.id)}
+              >
+                Disconnect
+              </Button>
+            </Space>
           ) : (
             <Button
               type="primary"
               size="small"
+              icon={<GoogleOutlined />}
               style={{
                 borderRadius: 8,
                 backgroundColor: "#4f83ff",
@@ -201,24 +247,6 @@ export default function Integrations() {
           )}
         </Space>
       ),
-    },
-  ];
-
-  const tabItems = [
-    {
-      key: "all",
-      label: "All",
-      children: null,
-    },
-    {
-      key: "connected",
-      label: "Connected",
-      children: null,
-    },
-    {
-      key: "available",
-      label: "Available",
-      children: null,
     },
   ];
 
@@ -247,6 +275,38 @@ export default function Integrations() {
       onClick: () => { },
     },
   ];
+
+  // Connect with google calendar related functionality 
+  async function ConnectWithGoogleCalendar() {
+    try {
+      const result = await linkWithPopup(auth, provider);
+      const credentials = GoogleAuthProvider.credentialFromResult(result);
+      const token = credentials.accessToken;
+      
+      // Store the token in localStorage for future API calls
+      localStorage.setItem('googleCalendarToken', token);
+      
+      // Update integration status in UI
+      const updatedIntegrations = integrations.map(item => {
+        if (item.id === 'google-calendar') {
+          return { ...item, status: 'connected', lastSync: 'just now' };
+        }
+        return item;
+      });
+      
+      // Show success message
+      message.success('Successfully connected to Google Calendar!');
+      
+      // Force component re-render to update UI
+      setIntegrations(updatedIntegrations);
+      
+      return token;
+    } catch (error) {
+      console.error('Google Calendar connection error:', error);
+      message.error('Failed to connect to Google Calendar. Please try again.');
+      return null;
+    }
+  }
 
   return (
     <div className="dashboard-container" data-theme={theme}>
